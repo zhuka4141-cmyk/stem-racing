@@ -1,0 +1,16 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1792614795
+export_presets.cfg::TextFile/TextFile::-1::1792612448::0::1::::<><><>0<>0<><>::
+::res://assets/::1792612216
+::res://assets/fonts/::1792612874
+cjk-bold.ttf::FontFile/FontFile::5315921726847329691::1792612865::1792612874::1::::<><><>0<>0<>c9bacfae1f5374cdc669462b1a834be5<>res://.godot/imported/cjk-bold.ttf-5efb9200bb2a89bc7e35b3bf64af1515.fontdata::
+cjk.ttf::FontFile/FontFile::4640169593751337827::1792612840::1792612874::1::::<><><>0<>0<>50ddf11947513d76809df795a04ec0b1<>res://.godot/imported/cjk.ttf-4ecf9f668376ab3fcad3e2ee07d0da4c.fontdata::
+mono.ttf::FontFile/FontFile::6731663516436507767::1792612865::1792612874::1::::<><><>0<>0<>b1cfdd9407039aa132855a961778975f<>res://.godot/imported/mono.ttf-547e90e9fe5c12175ae232b7b55b551a.fontdata::
+::res://build/::1792614795
+::res://scenes/::1792612449
+main.tscn::PackedScene/PackedScene::4597047402446164810::1792612449::0::1::::<><><>0<>0<><>::res://scripts/main.gd
+::res://scripts/::1792614793
+car.gd::GDScript/GDScript::5052026070501289435::1792613921::0::1::::CarBuilder<>RefCounted<><>0<>0<><>::
+catalog.gd::GDScript/GDScript::7394744880142074556::1792612913::0::1::::CarCatalog<>RefCounted<><>0<>0<><>::
+hud.gd::GDScript/GDScript::4951474791394911433::1792613296::0::1::::ExplodeHud<>Control<><>0<>0<><>::
+main.gd::GDScript/GDScript::7630788805792400951::1792614793::0::1::::<>Node<><>0<>0<><>::

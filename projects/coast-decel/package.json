@@ -1,0 +1,17 @@
+{
+  "name": "coast-decel",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "gate": "node tests/gate.mjs",
+    "visual": "node tests/visual.mjs",
+    "fonts": "node tests/fonts.mjs",
+    "ascii": "node tests/ascii.mjs",
+    "check": "node build.mjs && node tests/gate.mjs && node tests/visual.mjs && node tests/fonts.mjs"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2",
+    "playwright-core": "^1.64.1"
+  }
+}

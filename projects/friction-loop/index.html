@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>friction-loop · 前轮摩擦圆</title>
+<link rel="stylesheet" href="./design-tokens.css">
+<style>
+  html, body { margin: 0; background: var(--ink); color: var(--paper); }
+  body { font-family: var(--font-mono); }
+  .wrap { display: flex; gap: 32px; padding: 28px; align-items: flex-start; }
+
+  /* 舞台在 1080×1920 画布外再包一层，方便按窗口缩放而不影响取像素 */
+  .stage-box { flex: 0 0 auto; }
+  #stage { display: block; width: 486px; height: 864px; background: var(--ink); }
+
+  .panel { min-width: 300px; max-width: 360px; font-size: 13px; line-height: 1.6; }
+  .panel h1 { font-size: 15px; font-weight: 600; letter-spacing: .12em; margin: 0 0 4px; }
+  .panel .sub { opacity: .45; margin: 0 0 22px; font-size: 12px; }
+
+  .ctl { margin-bottom: 20px; }
+  .ctl .row { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+  .ctl .name { opacity: .75; }
+  .ctl .val { font-variant-numeric: tabular-nums; }
+  .ctl .tag {
+    font-size: 10px; letter-spacing: .1em; padding: 1px 5px;
+    border: 1px solid currentColor; opacity: .55;
+  }
+  .ctl .tag.verify { color: var(--accent); opacity: .9; }
+  .ctl .tag.fixed  { color: #7eaf5c; opacity: .9; }
+
+  input[type=range] {
+    -webkit-appearance: none; appearance: none;
+    width: 100%; height: 22px; margin: 6px 0 0; background: transparent;
+  }
+  input[type=range]::-webkit-slider-runnable-track {
+    height: 2px; background: rgba(242,240,235,.22);
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 12px; height: 18px; margin-top: -8px;
+    background: var(--accent); border: 0; border-radius: 0;   /* 硬边，不许圆角 */
+  }
+  input[type=range]:focus-visible { outline: 1px solid var(--accent); outline-offset: 3px; }
+
+  button {
+    margin-top: 8px; width: 100%; padding: 13px; cursor: pointer;
+    background: var(--accent); color: var(--ink); border: 0; border-radius: 0;
+    font: 600 13px/1 var(--font-mono); letter-spacing: .1em;
+  }
+  button:hover { filter: brightness(1.08); }
+
+  .note {
+    margin-top: 26px; padding-top: 14px; border-top: 1px solid rgba(242,240,235,.14);
+    font-size: 11px; line-height: 1.75; opacity: .5;
+  }
+  .note b { font-weight: 600; opacity: .85; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="stage-box">
+    <canvas id="stage" width="1080" height="1920"></canvas>
+  </div>
+
+  <div class="panel">
+    <h1>FRICTION-LOOP</h1>
+    <p class="sub">前轮接触斑的摩擦圆。拖动质心横向偏移，看侧向力怎么把余量吃光。</p>
+
+    <div class="ctl">
+      <div class="row"><span class="name">质心横向偏移</span><span class="val" id="out-d">0.30mm</span></div>
+      <div class="row"><span class="tag verify">TYPICAL</span><span class="tag">未实测</span></div>
+      <input id="in-d" type="range">
+    </div>
+
+    <div class="ctl">
+      <div class="row"><span class="name">前轮前束角</span><span class="val" id="out-toe">0.00°</span></div>
+      <div class="row"><span class="tag verify">VERIFY</span><span class="tag">等测量</span></div>
+      <input id="in-toe" type="range">
+    </div>
+
+    <div class="ctl">
+      <div class="row"><span class="name">轮轨摩擦系数 μ</span><span class="val" id="out-mu">0.60</span></div>
+      <div class="row"><span class="tag">TYPICAL</span><span class="tag">文献中值</span></div>
+      <input id="in-mu" type="range">
+    </div>
+
+    <button id="export">导出 PNG</button>
+
+    <div class="note">
+      <b>常量与假设</b><br>
+      整车质量 65 g、单轮转动惯量 4.5×10⁻⁷ kg·m²、轮半径 11 mm、
+      迎风面积 1.6×10⁻³ m²、Cd 0.34，折算后的等效惯性质量 79.9 g。
+      推力取半正弦脉冲 21 N / 110 ms，冲量 1.47 N·s。<br><br>
+      <b>哪些数不是我们测的</b><br>
+      μ、滚动阻力系数、导轨销到前轴的距离都是文献中值；推力峰值和烧完时间
+      也没上过试验台。画布上每个数都带 TYPICAL / VERIFY 标注，没标的只有推导量。<br><br>
+      <b>临界偏移为什么只有 0.3 mm</b><br>
+      推力 21 N，前轮总法向力只有 0.287 N，所以 0.3 mm 的质心偏移就能把
+      摩擦圆吃满。这不是模型不稳，是车的推重比决定的。<br><br>
+      <b>橙字是什么意思</b><br>
+      使用率越过 100 % 就是判定打滑：前轮侧向力已经到顶，车头开始摆。
+      底部整跑成绩掉出 1.00–1.25 s 也会变橙，说明参数组自洽校验没过，先别信图。
+    </div>
+  </div>
+</div>
+<script src="./dist/app.js"></script>
+</body>
+</html>

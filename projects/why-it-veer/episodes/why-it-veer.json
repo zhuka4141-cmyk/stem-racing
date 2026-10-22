@@ -1,0 +1,293 @@
+{
+ "id": "why-it-veer",
+ "series": "偏移诊断",
+ "episode_no": "01",
+ "canvas": {
+  "w": 1080,
+  "h": 1920,
+  "fps": 30,
+  "duration_s": 26.0
+ },
+ "palette": {
+  "bg": "#0C0D0F",
+  "panel": "#141619",
+  "hair": "#2A2E33",
+  "text": "#E8E6E1",
+  "dim": "#8A8F96",
+  "accent": "#E8590C",
+  "warn": "#F2C744",
+  "body": "#D9D5CC",
+  "pod": "#CFCAC0",
+  "canopy": "#2E3238",
+  "dark": "#252A31",
+  "wheel": "#16181C",
+  "hub": "#6D737B",
+  "pin": "#E8590C",
+  "com": "#F2C744",
+  "floor": "#1E2126",
+  "rail": "#3D434B",
+  "wall": "#33383F",
+  "stripe_a": "#23272C",
+  "stripe_b": "#282D33",
+  "stripe_ticks": "#4A5058"
+ },
+ "shots": {
+  "hero": {
+   "target": [
+    0.01,
+    0.02,
+    0.022
+   ],
+   "dist": 1.12,
+   "az": -52,
+   "el": 28,
+   "lens": 50,
+   "shift": -0.055
+  },
+  "top": {
+   "target": [
+    0.0,
+    0.03,
+    0.018
+   ],
+   "dist": 0.66,
+   "az": 0,
+   "el": 89,
+   "lens": 50,
+   "shift": -0.03
+  },
+  "front": {
+   "target": [
+    -0.002,
+    0.075,
+    0.016
+   ],
+   "dist": 0.6,
+   "az": 168,
+   "el": 11,
+   "lens": 50,
+   "shift": 0.0
+  },
+  "payoff": {
+   "target": [
+    0.006,
+    0.018,
+    0.026
+   ],
+   "dist": 1.3,
+   "az": -46,
+   "el": 22,
+   "lens": 50,
+   "shift": -0.03
+  }
+ },
+ "beats": [
+  {
+   "t0": 0.0,
+   "t1": 2.2,
+   "shot": "hero",
+   "kicker": "STEM RACING · 偏移诊断 01",
+   "head": [
+    [
+     "mono_b",
+     "4.0 mm"
+    ],
+    [
+     "cjk_b",
+     " 的偏心"
+    ]
+   ],
+   "sub": "车头在 {contact:.3f} m 就贴上导轨壁",
+   "panel": "bar",
+   "nums": null
+  },
+  {
+   "t0": 2.2,
+   "t1": 5.2,
+   "shot": "hero",
+   "kicker": "问题",
+   "head": [
+    [
+     "cjk_b",
+     "为什么车头"
+    ],
+    [
+     "cjk_b",
+     "会越跑越贴墙"
+    ]
+   ],
+   "sub": "不是轮子歪：质心没落在导向销上",
+   "panel": "none",
+   "nums": null
+  },
+  {
+   "t0": 5.2,
+   "t1": 9.0,
+   "shot": "top",
+   "kicker": "俯视 · 质心位置",
+   "head": [
+    [
+     "cjk_b",
+     "质心偏右 "
+    ],
+    [
+     "mono_b",
+     "{d_now:.1f} mm"
+    ]
+   ],
+   "sub": "导向销卡在中心线上，质心不在",
+   "panel": "none",
+   "nums": null
+  },
+  {
+   "t0": 9.0,
+   "t1": 11.5,
+   "shot": "front",
+   "kicker": "出发瞬间",
+   "head": [
+    [
+     "mono_b",
+     "M = m · a · d"
+    ],
+    [
+     "cjk_b",
+     ""
+    ]
+   ],
+   "sub": "a 峰值 {a_peak:.0f} m/s²，M 峰值 {M:.1f} mN·m",
+   "panel": "none",
+   "nums": null
+  },
+  {
+   "t0": 11.5,
+   "t1": 14.0,
+   "shot": "front",
+   "kicker": "前轮能顶住多少",
+   "head": [
+    [
+     "mono_b",
+     "{Mtyre:.2f}"
+    ],
+    [
+     "cjk_b",
+     " mN·m"
+    ]
+   ],
+   "sub": "力矩是它的 {over:.1f} 倍",
+   "panel": "none",
+   "nums": null
+  },
+  {
+   "t0": 14.0,
+   "t1": 16.5,
+   "shot": "top",
+   "kicker": "贴合位置",
+   "head": [
+    [
+     "mono_b",
+     "{contact:.3f} m"
+    ]
+   ],
+   "sub": "车头偏出 {nose:.1f} mm，正好碰到壁",
+   "panel": "bar",
+   "nums": null
+  },
+  {
+   "t0": 16.5,
+   "t1": 19.0,
+   "shot": "payoff",
+   "kicker": "之后",
+   "head": [
+    [
+     "cjk_b",
+     "剩下 "
+    ],
+    [
+     "mono_b",
+     "{rest:.2f} m"
+    ],
+    [
+     "cjk_b",
+     " 一直蹭"
+    ]
+   ],
+   "sub": "蹭掉 {work:.3f} J，多花 {dt:.1f} ms",
+   "panel": "bar",
+   "nums": null
+  },
+  {
+   "t0": 19.0,
+   "t1": 24.0,
+   "shot": "payoff",
+   "kicker": "20 m 容差",
+   "head": [
+    [
+     "cjk_b",
+     "容差只有 "
+    ],
+    [
+     "mono_b",
+     "{dcrit:.2f} mm"
+    ]
+   ],
+   "sub": "我们做到了 4.0 mm，超了 {over:.1f} 倍",
+   "panel": "nums",
+   "nums": [
+    [
+     "20 m 用时",
+     "t20",
+     "s"
+    ],
+    [
+     "末速",
+     "v",
+     "m/s"
+    ],
+    [
+     "超限",
+     "over",
+     "×"
+    ]
+   ]
+  },
+  {
+   "t0": 24.0,
+   "t1": 26.0,
+   "shot": "hero",
+   "kicker": "STEM RACING · 偏移诊断 01",
+   "head": [
+    [
+     "mono_b",
+     "4.0 mm"
+    ],
+    [
+     "cjk_b",
+     " 的偏心"
+    ]
+   ],
+   "sub": "车头在 {contact:.3f} m 就贴上导轨壁",
+   "panel": "bar",
+   "nums": null
+  }
+ ],
+ "physics": {
+  "track_length_m": 20.0,
+  "mass_kg": 0.06,
+  "frontal_area_m2": 0.0016,
+  "drag_coeff": 0.45,
+  "rolling_resistance": 0.004,
+  "wheel_radius_m": 0.015,
+  "wheel_mass_kg": 0.006,
+  "thrust_peak_n": 25.0,
+  "thrust_tau_s": 0.055,
+  "tyre_friction": 0.3,
+  "rail_friction": 0.25,
+  "pin_to_nose_m": 0.09,
+  "pin_to_front_axle_m": 0.075,
+  "pin_to_com_m": 0.035,
+  "yaw_inertia_com": 0.0002125,
+  "nose_rail_gap_m": 0.003,
+  "front_load_share": 0.45,
+  "cm_offset_m": 0.004
+ }
+}

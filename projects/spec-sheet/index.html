@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>整车外形与断面图 · Spec Sheet</title>
+<link rel="stylesheet" href="./design-tokens.css">
+<style>
+  html, body { margin: 0; background: #0B0B0C; color: #F2F0EB; }
+  body {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 16px; padding: 16px; min-height: 100vh;
+  }
+  #stage {
+    display: block;
+    max-height: 72vh; max-width: 96vw; width: auto; height: auto;
+    border: 1px solid rgba(255,255,255,.14);
+    background: #0B0B0C;
+  }
+  .bar {
+    display: flex; flex-wrap: wrap; gap: 14px 22px; align-items: flex-end;
+    justify-content: center; max-width: 96vw;
+    border: 1px solid rgba(255,255,255,.14);
+    background: #151517; padding: 14px 22px;
+  }
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field .label {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: .1em;
+    text-transform: uppercase; color: rgba(242,240,235,.55);
+  }
+  .field input {
+    font-family: var(--font-mono); font-size: 13px; font-variant-numeric: tabular-nums;
+    background: #0B0B0C; color: #F2F0EB;
+    border: 1px solid rgba(255,255,255,.14); border-radius: 0;
+    padding: 7px 9px; width: 96px;
+  }
+  .field input:focus { outline: 0; border-color: #E8590C; }
+  button {
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: .06em;
+    text-transform: uppercase; color: #F2F0EB; background: transparent;
+    border: 1px solid rgba(255,255,255,.14); border-radius: 0;
+    padding: 8px 20px; cursor: pointer;
+  }
+  button:hover { border-color: #E8590C; color: #E8590C; }
+  button[data-primary] { border-color: #E8590C; color: #E8590C; }
+  button[data-primary]:hover { background: #E8590C; color: #0B0B0C; }
+  .hint {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em;
+    color: rgba(242,240,235,.32); text-align: center; margin: 0;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="stage" width="1080" height="1920"></canvas>
+
+<div class="bar">
+  <div class="field"><span class="label">车长 L</span><input id="len" type="number" step="0.1" value="196.0"></div>
+  <div class="field"><span class="label">车宽 W</span><input id="wid" type="number" step="0.1" value="62.0"></div>
+  <div class="field"><span class="label">车高 H</span><input id="hgt" type="number" step="0.1" value="44.5"></div>
+  <div class="field"><span class="label">轮径 ø</span><input id="wheel" type="number" step="0.1" value="30.0"></div>
+  <div class="field"><span class="label">质心高</span><input id="cg" type="number" step="0.1" value="21.4"></div>
+  <div class="field"><span class="label">迎风 A / mm²</span><input id="area" type="number" step="10" value="1860"></div>
+  <div class="field"><span class="label">质量 / g</span><input id="mass" type="number" step="0.1" value="58.4"></div>
+  <button id="reset">恢复默认</button>
+  <button id="export" data-primary>导出 1080×1920</button>
+</div>
+
+<p class="hint">1080×1920 · 双击本文件即可运行 · 不读取任何外部资源</p>
+
+<script src="./dist/app.js"></script>
+</body>
+</html>

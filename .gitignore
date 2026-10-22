@@ -1,0 +1,17 @@
+﻿# ── 引擎本体，几个 G，绝对不进仓库 ──
+_tools/blender-4.2.1-windows-x64/
+_tools/godot/
+_tools/*.zip
+
+# ── 依赖，每个项目一份，重复 29 次 ──
+node_modules/
+
+# ── 渲染中间帧：Blender 一帧一张图，几千张 ──
+projects/*/work/
+projects/*/frames*/
+projects/explode-view-3d/godot/build/
+
+# ── 我自己的测试草稿 ──
+_test/
+_tmp_*
+*.log

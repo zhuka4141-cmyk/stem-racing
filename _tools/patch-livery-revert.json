@@ -1,0 +1,9 @@
+{
+  "edits": [
+    {
+      "file": "_stemlab/projects/livery-studio-3d/src/main.js",
+      "old": "noteBase: 1340",
+      "new": "noteBase: 1382"
+    }
+  ]
+}

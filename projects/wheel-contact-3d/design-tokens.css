@@ -1,0 +1,137 @@
+/* 设计底座 · 所有项目共用，改这里等于改全部
+   规范来源：anti-slop-design skill
+   禁用：Inter/Roboto/Poppins、#6366F1 系紫蓝、圆角 12/16px、transition:all、emoji 图标 */
+
+:root {
+  /* 纸与墨 */
+  --ink:        #0B0B0C;
+  --ink-2:      #151517;
+  --ink-3:      #1D1D20;
+  --paper:      #F2F0EB;
+  --paper-2:    #E4E1D9;
+
+  /* 单一强调色：测绘橙。改这个值即可换主题 */
+  --accent:     #E8590C;
+  --accent-dim: #A63D08;
+
+  /* 结构靠明度，不靠色相 */
+  --line:       rgba(255, 255, 255, 0.14);
+  --line-solid: #2A2A2E;
+  --mute:       rgba(242, 240, 235, 0.55);
+  --mute-2:     rgba(242, 240, 235, 0.32);
+
+  /* 网格：8px 基线，所有间距从这里派生 */
+  --u: 8px;
+  --sp-1: 8px;  --sp-2: 16px; --sp-3: 24px;
+  --sp-4: 32px; --sp-5: 48px; --sp-6: 64px;
+
+  /* 字体：等宽承载所有数字，这是工程感的来源 */
+  --font-display: "Bahnschrift Condensed", "Bahnschrift", "Arial Narrow", "Barlow Condensed", "Archivo Narrow", "Oswald", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  --font-body:    "IBM Plex Sans", "Archivo", "Noto Sans SC", system-ui, sans-serif;
+  --font-mono:    "JetBrains Mono", "IBM Plex Mono", "Roboto Mono", ui-monospace, monospace;
+
+  /* 类型阶：1.25 模数，基准 16，最多 4 个尺寸同屏 */
+  --t-micro: 11px;
+  --t-small: 13px;
+  --t-body:  16px;
+  --t-h3:    20px;
+  --t-h2:    25px;
+  --t-h1:    31px;
+  --t-disp:  39px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-size: var(--t-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 所有数字走等宽 + 表格数字，避免跳动 */
+.num, output, input[type=number], .reading {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+/* 微标签：大写 + 追踪字距。工程标注感的来源 */
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+h1 { font-size: var(--t-disp); line-height: 1.05; }
+h2 { font-size: var(--t-h2); }
+h3 { font-size: var(--t-h3); }
+
+/* 硬边、hairline。禁止圆角 */
+.panel {
+  border: 1px solid var(--line);
+  background: var(--ink-2);
+  padding: var(--sp-3);
+}
+
+.rule { height: 1px; background: var(--line); border: 0; margin: var(--sp-3) 0; }
+
+/* 赞助商条：矩形带，不是漂浮胶囊 */
+.sponsor-strip {
+  display: flex;
+  border: 1px solid var(--line);
+}
+.sponsor-strip > * {
+  flex: 1;
+  padding: var(--sp-1) var(--sp-2);
+  border-right: 1px solid var(--line);
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--mute);
+}
+.sponsor-strip > *:last-child { border-right: 0; }
+
+/* 按钮：硬边、无阴影、无渐变 */
+button {
+  font-family: var(--font-mono);
+  font-size: var(--t-small);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: transparent;
+  border: 1px solid var(--line);
+  padding: var(--sp-1) var(--sp-3);
+  cursor: pointer;
+  transition: background 140ms cubic-bezier(.2,0,.1,1),
+              border-color 140ms cubic-bezier(.2,0,.1,1);
+}
+button:hover { border-color: var(--accent); color: var(--accent); }
+button:active { background: var(--ink-3); }
+button[data-primary] { border-color: var(--accent); color: var(--accent); }
+button[data-primary]:hover { background: var(--accent); color: var(--ink); }
+
+/* 斜切：6-13 度，制造方向感 */
+.slash {
+  clip-path: polygon(0 0, 100% 0, calc(100% - 14px) 100%, 0 100%);
+}
+
+input[type=range] { accent-color: var(--accent); width: 100%; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}

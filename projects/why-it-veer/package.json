@@ -1,0 +1,9 @@
+{
+  "name": "why-it-veer",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "gate": "node tests/gate.mjs",
+    "visual": "node tests/visual.mjs"
+  }
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>虚拟风洞 · 迎角与阻力</title>
+<link rel="stylesheet" href="./design-tokens.css">
+<style>
+  body {
+    display: flex; flex-direction: column; align-items: center;
+    min-height: 100vh; gap: var(--sp-2); padding: var(--sp-2);
+  }
+  #stage {
+    display: block;
+    height: auto; width: auto;
+    max-height: 78vh; max-width: 96vw;
+    border: 1px solid var(--line);
+    background: var(--ink);
+  }
+  .bar {
+    display: flex; flex-wrap: wrap; gap: var(--sp-3);
+    align-items: center; justify-content: center;
+    border: 1px solid var(--line); background: var(--ink-2);
+    padding: var(--sp-2) var(--sp-3); max-width: 96vw;
+  }
+  .field { display: flex; flex-direction: column; gap: 4px; min-width: 190px; }
+  .field .row { display: flex; align-items: baseline; justify-content: space-between; gap: var(--sp-2); }
+  .field output {
+    font-family: var(--font-mono); font-size: var(--t-small);
+    color: var(--accent); font-variant-numeric: tabular-nums;
+  }
+  label.check {
+    display: flex; align-items: center; gap: 6px;
+    font-family: var(--font-mono); font-size: var(--t-small);
+    letter-spacing: 0.06em; text-transform: uppercase; color: var(--mute);
+    cursor: pointer;
+  }
+  .hint {
+    font-family: var(--font-mono); font-size: var(--t-micro);
+    letter-spacing: 0.08em; color: var(--mute-2); text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<canvas id="stage" width="1080" height="1920"></canvas>
+
+<div class="bar">
+  <div class="field">
+    <div class="row">
+      <span class="label">迎角 AOA</span>
+      <output id="aoa-out">4.0°</output>
+    </div>
+    <input id="aoa" type="range" min="0" max="10" step="0.5" value="4">
+  </div>
+
+  <div class="field">
+    <div class="row">
+      <span class="label">气流速度</span>
+      <output id="spd-out">18.0 m/s</output>
+    </div>
+    <input id="spd" type="range" min="8" max="30" step="0.5" value="18">
+  </div>
+
+  <label class="check"><input id="wake" type="checkbox" checked> 尾流</label>
+  <button id="pause">暂停</button>
+  <button id="export" data-primary>导出 9:16</button>
+</div>
+
+<p class="hint">1080×1920 · 导出同时产出竖版与 4:5 封面 · 全部离线运行</p>
+
+<script src="./dist/app.js"></script>
+</body>
+</html>

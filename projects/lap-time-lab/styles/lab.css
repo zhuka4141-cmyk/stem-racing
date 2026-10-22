@@ -1,0 +1,408 @@
+/* 20 m 直线加速实验室 · 样式
+   字体全部走系统本地栈（不联网就加载不到 Barlow/JetBrains，这是已知取舍，见 README）。
+   硬边、无圆角、无阴影、无渐变；结构靠明度，强调色只有一个：测绘橙。 */
+
+:root {
+  --ink:        #0B0B0C;
+  --ink-2:      #151517;
+  --ink-3:      #1D1D20;
+  --paper:      #F2F0EB;
+  --accent:     #E8590C;
+  --accent-dim: #A63D08;
+
+  --line:       rgba(242, 240, 235, 0.16);
+  --line-2:     rgba(242, 240, 235, 0.07);
+  --mute:       rgba(242, 240, 235, 0.55);
+  --mute-2:     rgba(242, 240, 235, 0.32);
+
+  --font-disp: "Bahnschrift Condensed", "Bahnschrift", "Arial Narrow", "Microsoft YaHei UI", "Noto Sans SC", sans-serif;
+  --font-body: "Segoe UI", "Microsoft YaHei UI", "Noto Sans SC", sans-serif;
+  /* 中文字形必须在 monospace 兜底之前，否则中文标签会静默丢字 */
+  --font-mono: "Cascadia Mono", "Consolas", "Microsoft YaHei", "Noto Sans SC", ui-monospace, monospace;
+
+  --t-micro: 11px;
+  --t-base:  14px;
+  --t-head:  30px;
+  --t-h1:    44px;
+  --t-hero:  104px;
+}
+
+* { box-sizing: border-box; }
+
+html { background: var(--ink); }
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-body);
+  font-size: var(--t-base);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* 数字一律等宽 + 表格数字，换值不跳宽度 */
+.num, output, .reading {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+/* ---------------- 页头 ---------------- */
+.masthead {
+  padding: 24px 24px 0;
+  max-width: 1560px;
+  margin: 0 auto;
+}
+.masthead__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 8px;
+}
+.masthead__title {
+  font-family: var(--font-disp);
+  font-weight: 600;
+  font-size: var(--t-h1);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin: 16px 0 0;
+  text-transform: none;
+}
+.masthead__dek {
+  margin: 10px 0 0;
+  max-width: 58ch;
+  color: var(--mute);
+  font-size: var(--t-base);
+}
+
+/* ---------------- 主栅格 ---------------- */
+.deck {
+  max-width: 1560px;
+  margin: 0 auto;
+  padding: 20px 24px 40px;
+  display: grid;
+  gap: 16px;
+}
+@media (min-aspect-ratio: 1/1) {
+  .deck { grid-template-columns: 408px minmax(0, 1fr); align-items: start; }
+  .deck__stack { position: sticky; top: 16px; }
+}
+.deck__stack { display: grid; gap: 16px; }
+.deck__charts { display: grid; gap: 16px; min-width: 0; }
+
+.panel {
+  border: 1px solid var(--line);
+  background: var(--ink-2);
+  padding: 16px;
+}
+
+/* 面板抬头：左边标题，右边微标签/按钮 */
+.panelhead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--line-2);
+  padding-bottom: 8px;
+  margin-bottom: 4px;
+}
+.panelhead button {
+  padding: 3px 12px;
+  font-size: 10.5px;
+}
+
+/* ---------------- 预测读数 ---------------- */
+.readout { display: flex; align-items: baseline; gap: 10px; margin: 10px 0 2px; }
+.readout__num {
+  font-family: var(--font-mono);
+  font-size: var(--t-hero);
+  font-weight: 500;
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  font-variant-numeric: tabular-nums;
+}
+.readout__unit {
+  font-family: var(--font-mono);
+  font-size: var(--t-head);
+  color: var(--mute);
+}
+.readout__cap { margin-top: 6px; }
+
+/* 合理区间条 */
+.bandstrip {
+  position: relative;
+  height: 26px;
+  margin: 18px 0 0;
+  border: 1px solid var(--line);
+  background: var(--ink);
+}
+.bandstrip__zone {
+  position: absolute;
+  top: 0; bottom: 0;
+  background: rgba(242, 240, 235, 0.10);
+  border-left: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+}
+.bandstrip__mark {
+  position: absolute;
+  top: -5px; bottom: -5px;
+  width: 2px;
+  background: var(--accent);
+}
+.bandstrip__mark::after {
+  content: "";
+  position: absolute;
+  left: -3px; top: -1px;
+  width: 8px; height: 4px;
+  background: var(--accent);
+}
+.bandstrip__scale {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--mute-2);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  margin-top: 16px;
+  background: var(--line-2);
+  border: 1px solid var(--line-2);
+}
+.stats > div {
+  background: var(--ink-2);
+  padding: 8px 10px;
+}
+.stats dt { margin: 0 0 2px; }
+.stats dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 18px;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+.stats dd span { font-size: 11px; color: var(--mute); margin-left: 3px; }
+
+/* 超区间警告 */
+.alert {
+  border: 1px solid var(--accent);
+  border-left-width: 4px;
+  background: rgba(232, 89, 12, 0.10);
+  padding: 12px 16px;
+}
+.alert[hidden] { display: none; }
+.alert__hd {
+  font-family: var(--font-mono);
+  font-size: var(--t-micro);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+.alert__bd { font-size: var(--t-base); color: var(--paper); }
+.alert__bd b { font-family: var(--font-mono); font-weight: 500; }
+
+/* ---------------- 滑杆 ---------------- */
+.ctrl { padding: 11px 0 9px; border-bottom: 1px solid var(--line-2); }
+.ctrl:last-of-type { border-bottom: 0; }
+.ctrl__top {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  cursor: help;
+}
+.ctrl__name { flex: 1 1 auto; font-size: var(--t-base); }
+.ctrl__name em {
+  font-family: var(--font-mono);
+  font-style: normal;
+  color: var(--mute);
+  font-size: 12px;
+  margin-left: 5px;
+}
+.ctrl__val {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--t-base);
+  white-space: nowrap;
+}
+.ctrl__val .unit { color: var(--mute); font-size: 11px; }
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  padding: 1px 5px;
+  border: 1px solid currentColor;
+  cursor: help;
+  white-space: nowrap;
+  line-height: 1.4;
+}
+.tag--fixed   { color: var(--mute-2); }
+.tag--typical { color: var(--mute); }
+.tag--verify  { color: var(--accent); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 20px;
+  margin: 8px 0 0;
+  background: transparent;
+  cursor: pointer;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 3px;
+  background: var(--ink-3);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line-2);
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 3px;
+  height: 17px;
+  margin-top: -8px;
+  background: var(--paper);
+  border: 0;
+  border-radius: 0;
+}
+input[type="range"]:focus-visible::-webkit-slider-thumb { background: var(--accent); }
+input[type="range"]:focus-visible { outline: 1px solid var(--accent); outline-offset: 3px; }
+.ctrl__scale {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--mute-2);
+  margin-top: 1px;
+}
+
+/* ---------------- 图表面板 ---------------- */
+.chart { border: 1px solid var(--line); background: var(--ink-2); padding: 14px 14px 10px; }
+.chart canvas { display: block; width: 100%; }
+
+/* ---------------- 常数表 ---------------- */
+.consts { max-width: 1560px; margin: 0 auto; padding: 0 24px 8px; }
+.consts .panelhead { margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+.consts__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 1px;
+  background: var(--line-2);
+  border: 1px solid var(--line-2);
+}
+.consts__item {
+  background: var(--ink-2);
+  padding: 9px 11px;
+  cursor: help;
+}
+.consts__sym {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--mute);
+  margin-right: 6px;
+}
+.consts__val {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 13px;
+}
+.consts__item .tag { float: right; }
+
+/* ---------------- 底部操作条 ---------------- */
+.footbar {
+  max-width: 1560px;
+  margin: 0 auto;
+  padding: 8px 24px 40px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+}
+.footbar__note { color: var(--mute); font-size: 12.5px; flex: 1 1 320px; max-width: 62ch; }
+
+button {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  padding: 10px 22px;
+  cursor: pointer;
+  transition: background 140ms cubic-bezier(.2, 0, .1, 1),
+              border-color 140ms cubic-bezier(.2, 0, .1, 1),
+              color 140ms cubic-bezier(.2, 0, .1, 1);
+}
+button:hover { border-color: var(--accent); color: var(--accent); }
+button:active { background: var(--ink-3); }
+button[data-primary] { border-color: var(--accent); color: var(--accent); }
+button[data-primary]:hover { background: var(--accent); color: var(--ink); }
+
+/* 斜切，制造方向感 */
+.slash { clip-path: polygon(0 0, 100% 0, calc(100% - 13px) 100%, 0 100%); padding-right: 34px; }
+
+/* ---------------- 悬停提示：参数验证状态 ---------------- */
+.tip {
+  position: fixed;
+  z-index: 60;
+  max-width: 340px;
+  background: var(--ink-3);
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--accent);
+  padding: 12px 14px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 130ms cubic-bezier(.2, 0, .1, 1),
+              transform 130ms cubic-bezier(.2, 0, .1, 1);
+}
+.tip[data-open] { opacity: 1; transform: translateY(0); }
+.tip__hd {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+.tip__name { font-size: 13px; }
+.tip__val {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--mute);
+  font-variant-numeric: tabular-nums;
+}
+.tip__note { font-size: 12.5px; color: var(--mute); line-height: 1.5; }
+
+/* 读屏可见、视觉隐藏 */
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.masthead__dek .tag { font-weight: 400; font-size: 10px; display: inline-block; transform: translateY(-1px); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* 竖屏单列时面板宽 1032，104px 的数字只占三成，撑不起重心 */
+@media (max-aspect-ratio: 1/1) {
+  :root { --t-hero: 150px; }
+}

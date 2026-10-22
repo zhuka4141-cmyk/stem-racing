@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>找不同 · 两台车的工程差异</title>
+<link rel="stylesheet" href="./design-tokens.css">
+<style>
+  html, body { margin: 0; background: var(--ink); color: var(--paper); }
+  body { font-family: var(--font-body); }
+
+  .wrap {
+    display: grid;
+    grid-template-columns: 540px 300px;
+    gap: 28px;
+    align-items: start;
+    padding: 28px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .stage-frame {
+    position: relative;
+    width: 540px;
+    height: 960px;
+    outline: 1px solid var(--line-solid);
+  }
+  #stage { display: block; width: 540px; height: 960px; cursor: default; }
+
+  .panel { font-family: var(--font-mono); font-size: var(--t-small); }
+  .panel h1 {
+    font-family: var(--font-display);
+    font-size: var(--t-h2);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0 0 6px;
+    line-height: 1.15;
+  }
+  .panel .sub { color: var(--mute); font-size: var(--t-micro); letter-spacing: 0.09em; text-transform: uppercase; margin-bottom: 22px; }
+
+  .count-row {
+    display: flex; align-items: baseline; gap: 10px;
+    padding: 12px 0 12px;
+    border-top: 1px solid var(--line-solid);
+    border-bottom: 1px solid var(--line-solid);
+    margin-bottom: 18px;
+  }
+  .count-row .num-big {
+    font-family: var(--font-mono); font-size: 30px; font-weight: 700;
+    font-variant-numeric: tabular-nums; letter-spacing: -0.02em;
+  }
+  .count-row .of { color: var(--mute); font-size: var(--t-micro); letter-spacing: 0.09em; }
+
+  .hint { color: var(--mute); line-height: 1.6; margin: 0 0 20px; font-size: var(--t-micro); }
+  .hint b { color: var(--paper); font-weight: 400; }
+
+  button {
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 13px;
+    cursor: pointer;
+    background: transparent;
+    color: var(--paper);
+    border: 1px solid var(--line-solid);
+    border-radius: 0;
+    font: inherit;
+    letter-spacing: 0.08em;
+    text-align: left;
+  }
+  button:hover { background: var(--ink-2); border-color: var(--accent); color: var(--accent); }
+  button[data-primary] { border-color: var(--accent); color: var(--accent); }
+  button[data-primary]:hover { background: var(--accent); color: var(--ink); }
+
+  .foot { color: var(--mute-2); font-size: var(--t-micro); margin-top: 22px; line-height: 1.6; }
+
+  @media (max-width: 900px) {
+    .wrap { grid-template-columns: 1fr; max-width: 540px; padding: 14px; gap: 20px; }
+    .stage-frame, #stage { width: 100%; height: auto; }
+    .stage-frame { aspect-ratio: 1080 / 1920; }
+    #stage { height: 100%; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="stage-frame"><canvas id="stage" width="1080" height="1920"></canvas></div>
+
+  <div class="panel">
+    <h1>两台车，六个参数不一样</h1>
+    <div class="sub">Spot the difference · 工程版</div>
+
+    <div class="count-row">
+      <span class="num-big" id="count">0 / 6</span>
+      <span class="of">已找到</span>
+    </div>
+
+    <p class="hint">
+      两台车都是同一个绘制函数按参数画出来的。差别只在<b>迎角、轮径、配重位置、尾翼角度、离地间隙、鼻锥长度</b>这六项里。
+      点中位置右边会给出两台车的数值，以及这个差值在物理上意味着什么。
+    </p>
+
+    <button id="reveal" data-primary>全部揭示</button>
+    <button id="reset">重新开始</button>
+    <button id="export">导出 9:16</button>
+    <button id="export-45">导出 4:5</button>
+
+    <div class="foot">
+      若一项差异只体现在外观上、不影响任何物理量，那它就不该出现在这个游戏里。
+    </div>
+  </div>
+</div>
+
+<script src="./dist/app.js"></script>
+<script>
+  document.getElementById('reveal').addEventListener('click', function () {
+    window.__app.revealAll();
+    document.getElementById('count').textContent = '6 / 6';
+  });
+  document.getElementById('reset').addEventListener('click', function () {
+    window.__app.set('reset');
+    document.getElementById('count').textContent = '0 / 6';
+  });
+  document.getElementById('export').addEventListener('click', function () {
+    window.__app.exportPNG().then(function (n) { console.log('9:16 ' + n + ' B'); });
+  });
+  document.getElementById('export-45').addEventListener('click', function () {
+    window.__app.exportCover().then(function (n) { console.log('4:5 ' + n + ' B'); });
+  });
+</script>
+</body>
+</html>

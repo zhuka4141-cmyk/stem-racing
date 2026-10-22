@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>车队卡生成器 · STEM Racing Team Card</title>
+<link rel="stylesheet" href="src/style.css">
+</head>
+<body>
+
+<header class="bar">
+  <div class="brand">
+    <span class="brand-mark" aria-hidden="true"></span>
+    <span class="brand-name">STEM RACING</span>
+    <span class="brand-sub">TEAM CARD GENERATOR</span>
+  </div>
+  <p class="bar-note">LOCAL BUILD · ZERO DEPENDENCY · NO UPLOAD</p>
+</header>
+
+<div class="app">
+
+  <aside class="panel">
+
+    <section class="grp">
+      <h2 class="grp-h">01 / 身份</h2>
+      <label class="fld"><span>队名</span>
+        <input data-bind="name" maxlength="42" value="VECTOR DYNAMICS" placeholder="TEAM NAME">
+      </label>
+      <div class="row2">
+        <label class="fld"><span>编号</span>
+          <input data-bind="number" maxlength="4" value="07" placeholder="07">
+        </label>
+        <label class="fld"><span>国家 / 学校</span>
+          <input data-bind="origin" maxlength="34" value="GBR / KINGSMERE COLLEGE" placeholder="GBR / SCHOOL">
+        </label>
+      </div>
+    </section>
+
+    <section class="grp">
+      <h2 class="grp-h">02 / 设计参数</h2>
+      <div class="row2">
+        <label class="fld"><span>质量 · g</span>
+          <input data-bind="mass" maxlength="8" inputmode="decimal" value="54.2" placeholder="54.2">
+        </label>
+        <label class="fld"><span>CdA · m²</span>
+          <input data-bind="cda" maxlength="8" inputmode="decimal" value="0.0041" placeholder="0.0041">
+        </label>
+      </div>
+      <div class="row2">
+        <label class="fld"><span>轮径 · mm</span>
+          <input data-bind="dia" maxlength="8" inputmode="decimal" value="30.0" placeholder="30.0">
+        </label>
+        <label class="fld"><span>跑分 · s</span>
+          <input data-bind="run" maxlength="8" inputmode="decimal" value="1.087" placeholder="1.087">
+        </label>
+      </div>
+    </section>
+
+    <section class="grp">
+      <h2 class="grp-h">03 / 配色</h2>
+      <div class="seg" role="group" aria-label="强调色">
+        <button data-accent="caliper" aria-pressed="true">卡钳红</button>
+        <button data-accent="timing" aria-pressed="false">计时绿</button>
+        <button data-accent="survey" aria-pressed="false">测绘橙</button>
+      </div>
+    </section>
+
+    <section class="grp">
+      <h2 class="grp-h">04 / 队徽</h2>
+      <div class="crest-row">
+        <label class="file-btn">
+          <input type="file" id="crest-file" accept="image/png,image/jpeg,image/webp,image/svg+xml">
+          选择图片
+        </label>
+        <button class="btn-ghost" id="crest-clear" type="button">清除</button>
+      </div>
+      <p class="note">图片只经过 FileReader 读进内存，压到 560 px 后直接进 SVG。<br>不写盘、不上传、不进仓库，刷新页面即消失。</p>
+    </section>
+
+    <section class="grp">
+      <h2 class="grp-h">05 / 出图</h2>
+      <p class="note">表单改动后 140 ms 防抖重绘。导出走 XMLSerializer → Blob → Image → canvas → toBlob，全程本地，不上传。</p>
+    </section>
+
+  </aside>
+
+  <main class="stage-col">
+
+    <div class="stage-bar">
+      <div class="seg" role="group" aria-label="预览尺寸" style="flex:0 0 auto;max-width:360px">
+        <button data-variant="4:5" aria-pressed="true">4:5 · 1080 × 1350</button>
+        <button data-variant="9:16" aria-pressed="false">9:16 · 1080 × 1920</button>
+      </div>
+      <p id="status" data-ok="1">READY</p>
+    </div>
+
+    <div id="stage"></div>
+
+    <div class="stage-foot">
+      <p>1080 PX WIDE · PNG · sRGB · 1:1</p>
+      <div class="ex">
+        <button id="ex-45" type="button">导出 PNG · 4:5</button>
+        <button id="ex-916" type="button">导出 PNG · 9:16</button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script src="assets/fonts-data.js"></script>
+<script src="src/card.js"></script>
+<script src="src/app.js"></script>
+</body>
+</html>

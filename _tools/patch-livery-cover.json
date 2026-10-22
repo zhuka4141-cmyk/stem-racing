@@ -1,0 +1,54 @@
+{
+  "edits": [
+    {
+      "file": "_stemlab/projects/livery-studio-3d/src/main.js",
+      "old": "const SAFE = { x0: 60, x1: 930, y0: 240, y1: 1480 };",
+      "new": "const SAFE = { x0: 60, x1: 930, y0: 240, y1: 1480 };\n\n/* 版式常量。结论行必须整体落在封面 1350 以内 —— 位置写在这里，门禁读同一份数，\n   不靠注释约定。\n   封面按 reel-export 的 cover 算法居中裁切，1920→1350 时可见源行是 285..1635，\n   所以结论在 1382 其实没被切。但那样只富余 253 px，谁把裁切改成上对齐就没了；\n   按 1350 卡死比实际窗口保守 285 px，换成任何裁切策略都安全。 */\nconst SPEC = { barY: 1314, barH: 34, noteBase: 1340, subBase: 1376 };\nconst MAT = { y0: 1174, step: 52 };\nconst HEAD = { barY: 296, barH: 3 };\nconst BANDS = {};"
+    },
+    {
+      "file": "_stemlab/projects/livery-studio-3d/src/main.js",
+      "old": "  ctx.fillStyle = ACCENT;\n  ctx.fillRect(SAFE.x0, 282, 46, 3);",
+      "new": "  ctx.fillStyle = ACCENT;\n  ctx.fillRect(SAFE.x0, HEAD.barY, 46, HEAD.barH);"
+    },
+    {
+      "file": "_stemlab/projects/livery-studio-3d/src/main.js",
+      "old": "  let y = 1186;\n  for (const [k, val] of rows) {",
+      "new": "  let y = MAT.y0;\n  for (const [k, val] of rows) {"
+    },
+    {
+      "file": "_stemlab/projects/livery-studio-3d/src/main.js",
+      "old": "    y += 66;",
+      "new": "    y += MAT.step;"
+    },
+    {
+      "file": "_stemlab/projects/livery-studio-3d/src/main.js",
+      "old": "  ctx.fillStyle = ACCENT;\n  ctx.fillRect(SAFE.x0, 1356, 3, 34);\n\n  ctx.fillStyle = PAPER;\n  ctx.font = '600 24px ' + MONO;\n  if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';\n  ctx.fillText(p.note, SAFE.x0 + 16, 1382);\n\n  ctx.fillStyle = MUTED;\n  ctx.font = '500 18px ' + MONO;\n  ctx.fillText('颜色只影响外观，不改质量与气动——真车这两件事要重新称重和重算', SAFE.x0 + 16, 1418);",
+      "new": "  ctx.fillStyle = ACCENT;\n  ctx.fillRect(SAFE.x0, SPEC.barY, 3, SPEC.barH);\n\n  ctx.fillStyle = PAPER;\n  ctx.font = '600 24px ' + MONO;\n  if ('letterSpacing' in ctx) ctx.letterSpacing = '0px';\n  ctx.fillText(p.note, SAFE.x0 + 16, SPEC.noteBase);\n\n  /* 记下结论行的真实墨迹包围盒。门禁拿它判「有没有整体落在封面里」，\n     所以这里量的必须就是刚画出去的那一行，不能另写一个数。 */\n  const mn = ctx.measureText(p.note);\n  BANDS.conclusion = {\n    text: p.note,\n    baseline: SPEC.noteBase,\n    y0: SPEC.noteBase - (mn.actualBoundingBoxAscent || 24 * 0.78),\n    y1: SPEC.noteBase + (mn.actualBoundingBoxDescent || 24 * 0.22),\n  };\n  BANDS.accentBar = { y0: HEAD.barY, y1: HEAD.barY + HEAD.barH };\n\n  ctx.fillStyle = MUTED;\n  ctx.font = '500 18px ' + MONO;\n  ctx.fillText('颜色只影响外观，不改质量与气动——真车这两件事要重新称重和重算', SAFE.x0 + 16, SPEC.subBase);"
+    },
+    {
+      "file": "_stemlab/projects/livery-studio-3d/src/main.js",
+      "old": "  canvas: stage,\n  safe: SAFE,",
+      "new": "  canvas: stage,\n  safe: SAFE,\n  getBands: () => BANDS,"
+    },
+    {
+      "file": "_stemlab/projects/livery-studio-3d/tests/gate.mjs",
+      "old": "const SAFE = { x0: 60, x1: 930, y0: 240, y1: 1480 };",
+      "new": "const SAFE = { x0: 60, x1: 930, y0: 240, y1: 1480 };\nconst COVER_H = 1350;\nconst COVER_VIS_TOP = (1920 - COVER_H) / 2;   // cover 居中裁切，可见源行从这里开始"
+    },
+    {
+      "file": "_stemlab/projects/livery-studio-3d/tests/gate.mjs",
+      "old": " *   4. 换配色后导出哈希必须变",
+      "new": " *   4. 换配色后导出哈希必须变\n *   5. 结论行必须整体落在封面 1350 以内（发 IG 时封面是第一眼）"
+    },
+    {
+      "file": "_stemlab/projects/livery-studio-3d/tests/gate.mjs",
+      "old": "/* ---------- 7. 排版 ---------- */",
+      "new": "/* ---------- 7. 封面可见性：结论行必须整体落在 1350 以内 ---------- */\n/* 这条能反向验证：把 SPEC.noteBase 改回 1382，下面第一条立刻红。\n   背景：封面 1080×1350 由 reel-export 的 cover 算法居中裁切，1920→1350 时\n   可见源行是 285..1635。结论原来在 1382，其实仍在可见窗口里，但只富余 253 px，\n   谁把裁切改成上对齐就没了。所以按 1350 卡死，比实际窗口再保守 285 px。 */\nconst bands = await page.evaluate(() => window.__app.getBands());\nok(!!bands.conclusion, '结论行包围盒有记录');\nif (bands.conclusion) {\n  const c = bands.conclusion;\n  ok(c.y1 <= COVER_H,\n    `结论行整体在封面 ${COVER_H} 以内（y ${c.y0.toFixed(0)}..${c.y1.toFixed(0)}，基线 ${c.baseline}）`);\n}\nok(!!bands.accentBar && bands.accentBar.y0 >= COVER_VIS_TOP,\n  `页眉强调条没被封面顶部切掉（y ${bands.accentBar ? bands.accentBar.y0 : '?'}，可见窗口从 ${COVER_VIS_TOP} 起）`);\n\n/* 不只信数字：真按 cover 算法重采样一次，数结论那一带的墨 */\nconst covInk = await page.evaluate(() => {\n  const src = window.__app.canvas;\n  const W = src.width, H = src.height;\n  const b = window.__app.getBands().conclusion;\n  const out = document.createElement('canvas');\n  out.width = 1080; out.height = 1350;\n  const g = out.getContext('2d', { willReadFrequently: true });\n  const scale = Math.max(1080 / W, 1350 / H);\n  const dw = W * scale, dh = H * scale, dy = (1350 - dh) / 2;\n  g.drawImage(src, (1080 - dw) / 2, dy, dw, dh);\n  const d = g.getImageData(0, 0, 1080, 1350).data;\n  const y0 = Math.max(0, Math.floor(b.y0 * scale + dy));\n  const y1 = Math.min(1349, Math.ceil(b.y1 * scale + dy));\n  let ink = 0;\n  for (let y = y0; y <= y1; y++)\n    for (let x = 0; x < 1080; x++) {\n      const i = (y * 1080 + x) * 4;\n      if (0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2] > 90) ink++;\n    }\n  return { ink, y0, y1 };\n});\nok(covInk.ink > 200,\n  `封面像素里确实有结论行（${covInk.ink} px，封面 y ${covInk.y0}..${covInk.y1}）`);\n\n/* ---------- 8. 排版 ---------- */"
+    },
+    {
+      "file": "_stemlab/projects/livery-studio-3d/tests/gate.mjs",
+      "old": "/* ---------- 8. 干净 ---------- */",
+      "new": "/* ---------- 9. 干净 ---------- */"
+    }
+  ]
+}

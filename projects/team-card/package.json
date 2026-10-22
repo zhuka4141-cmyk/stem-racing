@@ -1,0 +1,13 @@
+{
+  "name": "team-card",
+  "version": "1.0.0",
+  "private": true,
+  "description": "STEM Racing team trading-card generator - pure SVG, no framework, no build step",
+  "type": "module",
+  "scripts": {
+    "gate": "node tests/gate.mjs"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.64.1"
+  }
+}

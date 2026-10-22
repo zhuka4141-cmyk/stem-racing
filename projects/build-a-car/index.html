@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="data:,">
+<title>装车台 · Assembly Bay</title>
+<link rel="stylesheet" href="./design-tokens.css">
+<style>
+  html, body {
+    margin: 0; padding: 0; background: #070708; color: #f2f0eb;
+    font-family: "IBM Plex Sans", "Noto Sans SC", "Microsoft YaHei", system-ui, sans-serif;
+  }
+  .wrap {
+    display: flex; gap: 32px; padding: 28px;
+    align-items: flex-start; min-height: 100vh; box-sizing: border-box;
+  }
+  #stage {
+    display: block; width: 432px; height: 768px;
+    background: #0b0b0c; flex: 0 0 auto;
+    border: 1px solid rgba(242,240,235,0.10);
+  }
+  .panel {
+    flex: 1 1 auto; max-width: 380px; min-width: 280px;
+    font-family: "JetBrains Mono","IBM Plex Mono","Roboto Mono",Consolas,"Microsoft YaHei","Noto Sans SC",monospace;
+    font-size: 13px; line-height: 1.5;
+  }
+  .panel h1 {
+    font-size: 15px; font-weight: 600; letter-spacing: .14em;
+    text-transform: uppercase; margin: 0 0 4px;
+  }
+  .panel .hint { font-size: 11px; color: rgba(242,240,235,0.42); margin: 0 0 20px; line-height: 1.7; }
+  .row { margin-bottom: 16px; }
+  .row .lab {
+    display: block; color: rgba(242,240,235,0.55); margin-bottom: 6px;
+    font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+  }
+  .seg { display: flex; gap: 4px; }
+  .segbtn {
+    flex: 1 1 0; padding: 10px 4px; cursor: pointer;
+    background: transparent; color: rgba(242,240,235,0.55);
+    border: 1px solid rgba(242,240,235,0.16); border-radius: 0;
+    font: inherit; font-size: 12px; letter-spacing: 0;
+    transition: none;
+  }
+  .segbtn:hover { border-color: rgba(242,240,235,0.38); color: #f2f0eb; }
+  .segbtn.on {
+    background: #e8590c; border-color: #e8590c; color: #0b0b0c; font-weight: 600;
+  }
+  .segbtn:focus-visible { outline: 2px solid #e8590c; outline-offset: 1px; }
+  #export {
+    width: 100%; padding: 14px; margin-top: 10px; cursor: pointer;
+    background: #e8590c; color: #0b0b0c; border: 0; border-radius: 0;
+    font: inherit; font-weight: 600; letter-spacing: .10em; text-transform: uppercase;
+  }
+  #export:hover:not(:disabled) { filter: brightness(1.12); }
+  #export:disabled { opacity: .5; cursor: default; }
+  .note {
+    font-size: 11px; color: rgba(242,240,235,0.34); line-height: 1.8;
+    margin-top: 18px; border-top: 1px solid rgba(242,240,235,0.08); padding-top: 14px;
+  }
+  .note b { color: rgba(242,240,235,0.55); font-weight: 500; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+  @media (max-width: 860px) {
+    .wrap { flex-direction: column; gap: 20px; padding: 16px; }
+    #stage { width: 300px; height: 533px; }
+    .panel { max-width: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <canvas id="stage" width="1080" height="1920"></canvas>
+
+  <div class="panel" id="panel">
+    <h1>装车台</h1>
+    <p class="hint">四组零件各三选一 · 81 种装法 · 换一个零件全部重算</p>
+
+    <button id="export">导出 9:16</button>
+
+    <p class="note">
+      <b>三条限值里只有一条是真锚</b><br>
+      「前轮抗偏航力矩 5.96 mN·m」是队里台架量的数。<br>
+      「质心横向偏移」原来写死 1.32 mm —— 那是旧 4.5 N 推力下的结果
+      （5.96 ÷ 1.32 = 4.52 N）。现在推力峰值 21 N，反推出 <b>0.568 mm</b>。<br><br>
+      这两个数不能各自为本，<b>偏移上限必须从力矩上限反推</b>。
+    </p>
+  </div>
+</div>
+<script src="./dist/app.js"></script>
+</body>
+</html>

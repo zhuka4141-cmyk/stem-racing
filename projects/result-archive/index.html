@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>成绩档案 · result-archive</title>
+<link rel="stylesheet" href="./design-tokens.css">
+<link rel="stylesheet" href="./panel.css">
+<style>
+  #q { margin-bottom: 10px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <canvas id="stage" width="1080" height="1920"></canvas>
+
+  <aside class="panel" id="panel">
+    <div class="hd">
+      <span class="k">RESULT-ARCHIVE</span>
+      <span class="v">成绩档案</span>
+    </div>
+
+    <section class="sec">
+      <div class="lb"><span>01 / 搜赛事或车号</span><span class="n" id="qHit">0</span></div>
+      <input type="text" id="q" placeholder="例如 省赛 / 07" spellcheck="false" autocomplete="off">
+      <p class="note">12 站记录写在 <code>src/results.js</code> 里，是本地常量。页面不读外部文件，也不联网。</p>
+    </section>
+
+    <section class="sec">
+      <div class="lb"><span>02 / 排序</span></div>
+      <div class="chips" id="sorts"></div>
+    </section>
+
+    <section class="sec">
+      <div class="lb"><span>03 / 导出</span></div>
+      <div class="row">
+        <button id="ex1" type="button">9:16 竖版</button>
+        <button id="ex2" type="button">4:5 封面</button>
+      </div>
+      <div style="margin-top:12px">
+        <div class="stat"><span>总记录</span><b id="sTotal">0</b></div>
+        <div class="stat"><span>当前显示</span><b id="sShown">0</b></div>
+        <div class="stat"><span>排序</span><b id="sSort">日期</b></div>
+      </div>
+    </section>
+  </aside>
+</div>
+
+<script src="./dist/app.js"></script>
+</body>
+</html>

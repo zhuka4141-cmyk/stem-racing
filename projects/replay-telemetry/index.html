@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>遥测回放 · Replay Telemetry</title>
+<link rel="stylesheet" href="./design-tokens.css">
+<style>
+  html, body {
+    margin: 0; padding: 0;
+    background: #070708;
+    color: #f2f0eb;
+    font-family: "IBM Plex Sans", "Noto Sans SC", "Microsoft YaHei", system-ui, sans-serif;
+  }
+  .wrap {
+    display: flex; gap: 32px; padding: 28px;
+    align-items: flex-start; min-height: 100vh; box-sizing: border-box;
+  }
+  #stage {
+    display: block;
+    width: 432px; height: 768px;
+    background: #0b0b0c;
+    flex: 0 0 auto;
+    border: 1px solid rgba(242,240,235,0.10);
+    touch-action: none;
+  }
+  .panel {
+    flex: 1 1 auto; max-width: 380px; min-width: 280px;
+    font-family: "JetBrains Mono","IBM Plex Mono","Roboto Mono",Consolas,"Microsoft YaHei","Noto Sans SC",monospace;
+    font-size: 13px; line-height: 1.5;
+  }
+  .panel h1 {
+    font-size: 15px; font-weight: 600; letter-spacing: .14em;
+    text-transform: uppercase; margin: 0 0 4px;
+    color: rgba(242,240,235,0.92);
+  }
+  .panel .hint {
+    font-size: 11px; color: rgba(242,240,235,0.42);
+    margin: 0 0 22px; line-height: 1.6;
+  }
+  .row { margin-bottom: 20px; }
+  .row .lab {
+    display: flex; justify-content: space-between; align-items: baseline;
+    color: rgba(242,240,235,0.55); margin-bottom: 7px;
+  }
+  .row .val {
+    color: #e8590c; font-weight: 600; font-variant-numeric: tabular-nums;
+  }
+  input[type=range] {
+    -webkit-appearance: none; appearance: none;
+    width: 100%; height: 2px; background: rgba(242,240,235,0.18);
+    outline: none; margin: 0; cursor: pointer;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 14px; height: 14px; border-radius: 0;
+    background: #e8590c; cursor: pointer;
+  }
+  #scrub::-webkit-slider-thumb { background: #f2f0eb; width: 10px; height: 20px; }
+  fieldset {
+    border: 0; border-top: 1px solid rgba(242,240,235,0.10);
+    margin: 0 0 20px; padding: 16px 0 0;
+  }
+  legend {
+    padding: 0 8px 0 0; font-size: 11px; letter-spacing: .12em;
+    text-transform: uppercase; color: rgba(242,240,235,0.40);
+  }
+  .tog {
+    display: flex; align-items: center; gap: 10px;
+    padding: 7px 0; cursor: pointer; color: rgba(242,240,235,0.68);
+  }
+  .tog input { accent-color: #e8590c; width: 14px; height: 14px; margin: 0; cursor: pointer; }
+  .tog .sw { width: 18px; height: 4px; flex: 0 0 auto; }
+  button {
+    width: 100%; padding: 14px; margin-top: 6px; cursor: pointer;
+    background: #e8590c; color: #0b0b0c;
+    border: 0; border-radius: 0;
+    font: inherit; font-weight: 600; letter-spacing: .10em;
+    text-transform: uppercase;
+  }
+  button:hover:not(:disabled) { filter: brightness(1.12); }
+  button:disabled { opacity: .5; cursor: default; }
+  .note {
+    font-size: 11px; color: rgba(242,240,235,0.34);
+    line-height: 1.7; margin-top: 18px;
+    border-top: 1px solid rgba(242,240,235,0.08); padding-top: 14px;
+  }
+  .note b { color: rgba(242,240,235,0.55); font-weight: 500; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+  @media (max-width: 860px) {
+    .wrap { flex-direction: column; gap: 20px; padding: 16px; }
+    #stage { width: 320px; height: 569px; }
+    .panel { max-width: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <canvas id="stage" width="1080" height="1920"></canvas>
+
+  <div class="panel">
+    <h1>遥测回放</h1>
+    <p class="hint">一次完整运行的帧级记录 · 240 Hz · 拖动画布上的时间轴或下面的滑块</p>
+
+    <div class="row">
+      <div class="lab"><span>定位到帧</span><span class="val"><span id="scrubOut">—</span></span></div>
+      <input id="scrub" type="range" min="0" max="1000" step="1" value="0">
+    </div>
+
+    <div class="row">
+      <div class="lab"><span>推力峰值 F_peak</span><span class="val"><span id="fPeakOut">21</span> N</span></div>
+      <input id="fPeak" type="range" min="10" max="35" step="1" value="21">
+    </div>
+
+    <div class="row">
+      <div class="lab"><span>推力时长 t_burn</span><span class="val"><span id="tBurnOut">110</span> ms</span></div>
+      <input id="tBurn" type="range" min="30" max="180" step="5" value="110">
+    </div>
+
+    <div class="row">
+      <div class="lab"><span>整车质量 m</span><span class="val"><span id="massOut">65</span> g</span></div>
+      <input id="mass" type="range" min="40" max="100" step="1" value="65">
+    </div>
+
+    <fieldset>
+      <legend>受力条带显示</legend>
+      <label class="tog"><input id="tog-thrust" type="checkbox" checked><span class="sw" style="background:#e8590c"></span>推力 F_thrust</label>
+      <label class="tog"><input id="tog-drag" type="checkbox" checked><span class="sw" style="background:rgba(242,240,235,0.62)"></span>气动阻力 F_drag</label>
+      <label class="tog"><input id="tog-roll" type="checkbox" checked><span class="sw" style="background:rgba(242,240,235,0.34)"></span>滚动阻力 F_roll</label>
+    </fieldset>
+
+    <button id="pause">暂停</button>
+    <button id="export">导出 9:16</button>
+
+    <p class="note">
+      <b>数据来源标注</b><br>
+      ρ、g、赛道长度 = 物理常数<br>
+      Cd0、迎风面积、滚阻系数、轮转动惯量 = 文献中值，未实测<br>
+      质量、推力曲线 = <b>待车队实测</b>
+    </p>
+  </div>
+</div>
+<script src="./dist/app.js"></script>
+</body>
+</html>

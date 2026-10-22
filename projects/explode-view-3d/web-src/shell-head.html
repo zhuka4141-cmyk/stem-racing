@@ -1,0 +1,108 @@
+<style>
+:root {
+	--bg: #0B0B0C;
+	--ink: #EDEFF1;
+	--ink2: #9AA0A6;
+	--ink3: #7E838A;
+	--accent: #E8590C;
+	--mono: Consolas, "Cascadia Mono", "DejaVu Sans Mono", monospace;
+}
+html, body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	background: var(--bg);
+	overflow: hidden;
+	touch-action: none;
+	-webkit-tap-highlight-color: transparent;
+}
+body { color: var(--ink); font-family: var(--mono); }
+#canvas {
+	position: fixed;
+	left: 50%;
+	top: 50%;
+	display: block;
+	width: 1080px;
+	height: 1920px;
+	transform-origin: center center;
+	transform: translate(-50%, -50%) scale(0.4);
+	background: var(--bg);
+	outline: none;
+}
+#status {
+	background: var(--bg);
+	gap: 22px;
+	font-family: var(--mono);
+}
+#status-splash { display: none !important; }
+#status-progress {
+	-webkit-appearance: none;
+	appearance: none;
+	display: block;
+	width: 240px;
+	height: 2px;
+	border: 0;
+	background: rgba(255, 255, 255, 0.14);
+	color: var(--accent);
+}
+#status-progress::-webkit-progress-bar {
+	background: rgba(255, 255, 255, 0.14);
+}
+#status-progress::-webkit-progress-value {
+	background: var(--accent);
+}
+#status-progress::-moz-progress-bar {
+	background: var(--accent);
+}
+#boot-label {
+	font-size: 11px;
+	letter-spacing: 0.22em;
+	color: var(--ink3);
+	text-transform: uppercase;
+}
+#status-notice {
+	background: transparent;
+	border: 1px solid rgba(232, 89, 12, 0.55);
+	border-radius: 0;
+	color: var(--ink2);
+	font-family: var(--mono);
+	font-size: 12px;
+	line-height: 1.9;
+	margin: 0 2rem;
+	max-width: 620px;
+	padding: 22px 24px;
+	text-align: left;
+	white-space: pre-wrap;
+}
+#fileproto {
+	position: fixed;
+	inset: 0;
+	display: none;
+	place-content: center;
+	justify-items: start;
+	gap: 14px;
+	padding: 0 24px;
+	background: var(--bg);
+	font-family: var(--mono);
+	font-size: 13px;
+	line-height: 2;
+	color: var(--ink2);
+	z-index: 99;
+}
+#fileproto strong {
+	display: block;
+	font-size: 15px;
+	letter-spacing: 0.04em;
+	color: var(--accent);
+	font-weight: 400;
+	margin-bottom: 6px;
+}
+#fileproto code {
+	display: inline-block;
+	padding: 2px 8px;
+	border: 1px solid rgba(255, 255, 255, 0.16);
+	color: var(--ink);
+}
+</style>
+<link rel="icon" href="data:,">
+<script defer src="app.js"></script>

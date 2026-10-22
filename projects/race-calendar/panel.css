@@ -1,0 +1,166 @@
+/* 五块项目共用的面板样式
+   规则：极深底、细分割线、单一橙色、硬边、等宽数字。
+   所有圆角都是 0，所有阴影都不存在。
+   派生自 design-tokens.css 的变量，不要在这里写死颜色。 */
+
+html, body { margin: 0; background: var(--ink); color: var(--paper); }
+body { min-height: 100vh; }
+
+.wrap {
+  display: flex;
+  gap: 32px;
+  padding: 24px;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* 竖版卡：按视口高度缩，保证整张卡一眼看完 */
+#stage {
+  display: block;
+  height: min(94vh, 1000px);
+  width: auto;
+  aspect-ratio: 1080 / 1920;
+  background: var(--ink);
+  border: 1px solid var(--line-solid);
+}
+
+.panel {
+  width: 360px;
+  flex: 0 0 360px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--paper);
+}
+
+.hd {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 8px;
+}
+.hd .k { font-size: 11px; letter-spacing: .1em; color: var(--accent); }
+.hd .v { font-size: 12px; color: var(--mute); }
+
+.sec { padding: 16px 0; border-bottom: 1px solid var(--line); }
+.sec:last-child { border-bottom: 0; }
+
+.lb {
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--mute-2);
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.lb .n { color: var(--accent); font-variant-numeric: tabular-nums; }
+
+.note {
+  margin: 10px 0 0;
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: var(--mute);
+  border-left: 2px solid var(--accent);
+  padding-left: 10px;
+}
+
+.chk {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  line-height: 1.55;
+  cursor: pointer;
+  font-size: 13px;
+}
+.chk input { margin: 2px 0 0; width: 16px; height: 16px; accent-color: var(--accent); flex: 0 0 16px; }
+
+input[type=text], input[type=file], textarea {
+  width: 100%;
+  box-sizing: border-box;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--paper);
+  background: var(--ink-2);
+  border: 1px solid var(--line);
+  padding: 9px 10px;
+  outline: none;
+  border-radius: 0;
+}
+input[type=text]:focus, textarea:focus { border-color: var(--accent); }
+textarea { resize: vertical; }
+input[type=file] { border-style: dashed; color: var(--mute); cursor: pointer; }
+input[type=file]::file-selector-button {
+  font: inherit;
+  font-size: 12px;
+  background: transparent;
+  color: var(--paper);
+  border: 1px solid var(--line);
+  padding: 4px 10px;
+  margin-right: 10px;
+  cursor: pointer;
+  border-radius: 0;
+}
+
+/* 筛选芯片：一排硬边按钮，选中的那枚填橙 */
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  font: inherit;
+  font-size: 11.5px;
+  letter-spacing: .06em;
+  color: var(--mute);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  padding: 6px 10px;
+  cursor: pointer;
+  transition: color 140ms, border-color 140ms, background 140ms;
+}
+.chip:hover { border-color: var(--accent); color: var(--accent); }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--ink); }
+
+.row { display: flex; gap: 8px; }
+.row > * { flex: 1; }
+
+button {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--paper);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  padding: 11px 12px;
+  cursor: pointer;
+  transition: background 140ms cubic-bezier(.2,0,.1,1), border-color 140ms cubic-bezier(.2,0,.1,1);
+}
+button:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+button:active:not(:disabled) { background: var(--ink-3); }
+
+button[data-primary] { border-color: var(--accent); color: var(--accent); width: 100%; padding: 14px; }
+button[data-primary]:hover:not(:disabled) { background: var(--accent); color: var(--ink); }
+
+button:disabled { opacity: .35; cursor: not-allowed; border-color: var(--line-solid); color: var(--mute-2); }
+
+.readout {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  font-size: 11px;
+  letter-spacing: .08em;
+  color: var(--mute-2);
+}
+.readout b { color: var(--paper); font-weight: 500; font-variant-numeric: tabular-nums; }
+
+.stat { display: flex; justify-content: space-between; padding: 3px 0; color: var(--mute); }
+.stat b { color: var(--paper); font-weight: 500; font-variant-numeric: tabular-nums; }
+
+@media (max-width: 900px) {
+  .wrap { flex-direction: column; align-items: stretch; }
+  .panel { width: auto; flex: none; }
+  #stage { height: auto; width: 100%; }
+}

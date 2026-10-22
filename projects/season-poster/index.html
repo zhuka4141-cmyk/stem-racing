@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>赛季成绩单 · Season Poster</title>
+<link rel="stylesheet" href="./design-tokens.css">
+<style>
+  html, body { margin: 0; background: #0B0B0C; color: #F2F0EB; }
+  body {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 16px; padding: 16px; min-height: 100vh;
+  }
+  #stage {
+    display: block;
+    max-height: 74vh; max-width: 96vw; width: auto; height: auto;
+    border: 1px solid rgba(255,255,255,.14);
+    background: #0B0B0C;
+  }
+  .bar {
+    display: flex; flex-wrap: wrap; gap: 12px 26px; align-items: center;
+    justify-content: center; max-width: 96vw;
+    border: 1px solid rgba(255,255,255,.14);
+    background: #151517; padding: 12px 22px;
+  }
+  .chk {
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: .04em;
+    color: rgba(242,240,235,.7); cursor: pointer; user-select: none;
+  }
+  .chk input { accent-color: #E8590C; width: 14px; height: 14px; cursor: pointer; }
+  button {
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: .06em;
+    text-transform: uppercase; color: #F2F0EB; background: transparent;
+    border: 1px solid rgba(255,255,255,.14); border-radius: 0;
+    padding: 8px 20px; cursor: pointer;
+  }
+  button:hover { border-color: #E8590C; color: #E8590C; }
+  button[data-primary] { border-color: #E8590C; color: #E8590C; }
+  button[data-primary]:hover { background: #E8590C; color: #0B0B0C; }
+  .hint {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: .08em;
+    color: rgba(242,240,235,.32); text-align: center; margin: 0; line-height: 1.9;
+  }
+  .hint code { color: rgba(242,240,235,.55); }
+</style>
+</head>
+<body>
+
+<canvas id="stage" width="1080" height="1920"></canvas>
+
+<div class="bar">
+  <label class="chk"><input id="fit" type="checkbox" checked>显示拟合线</label>
+  <label class="chk"><input id="vals" type="checkbox" checked>显示逐站数值</label>
+  <button id="export" data-primary>导出 1080×1920</button>
+</div>
+
+<p class="hint">1080×1920 · 双击本文件即可运行 · 不读取任何外部资源<br>赛事数据写在 <code>src/main.js</code> 顶部的 <code>SEASON</code> 常量里，改这个文件就换赛季</p>
+
+<script src="./dist/app.js"></script>
+</body>
+</html>

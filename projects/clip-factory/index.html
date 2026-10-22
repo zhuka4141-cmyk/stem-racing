@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>数据卡工厂 · clip-factory</title>
+<link rel="stylesheet" href="./design-tokens.css">
+<link rel="stylesheet" href="./panel.css">
+</head>
+<body>
+<div class="wrap">
+  <canvas id="stage" width="1080" height="1920"></canvas>
+
+  <aside class="panel" id="panel">
+    <div class="hd">
+      <span class="k">CLIP-FACTORY</span>
+      <span class="v">数据卡工厂</span>
+    </div>
+
+    <section class="sec">
+      <div class="lb"><span>01 / 一组数据，四张卡</span><span class="n" id="nCards">4</span></div>
+      <div class="chips" id="cards"></div>
+      <p class="note">四个视角都从 <code>src/points.js</code> 同一组数据点算出来，不是四份手写文案。改一处，四张卡一起变。</p>
+    </section>
+
+    <section class="sec">
+      <div class="lb"><span>02 / 批量导出</span></div>
+      <div class="row">
+        <button id="exAll" type="button" data-primary>导出全部 4 张</button>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <button id="ex1" type="button">只要这张 9:16</button>
+        <button id="ex2" type="button">只要这张 4:5</button>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="lb"><span>03 / 本组数值</span></div>
+      <div class="stat"><span>用时</span><b id="sTime">—</b></div>
+      <div class="stat"><span>比上次</span><b id="sDelta">—</b></div>
+      <div class="stat"><span>对对手</span><b id="sRival">—</b></div>
+    </section>
+  </aside>
+</div>
+
+<script src="./dist/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+/* consent-avatar-race 布局样式。
+   原来这 154 行内联在 index.html 里，和 design-tokens.css 的 .panel / button
+   有重叠定义。抽出来是为了让 index.html 只剩结构。
+   加载顺序必须是 design-tokens.css 在前、本文件在后——本来内联块就在
+   <link> 之后，级联顺序没变。 */
+
+  html, body { margin: 0; background: var(--ink); color: var(--paper); }
+  body { min-height: 100vh; }
+
+  .wrap {
+    display: flex;
+    gap: 32px;
+    padding: 24px;
+    align-items: flex-start;
+    justify-content: center;
+  }
+
+  /* 竖版卡：按视口高度缩，保证整张卡一眼看完 */
+  #stage {
+    display: block;
+    height: min(94vh, 1000px);
+    width: auto;
+    aspect-ratio: 1080 / 1920;
+    background: var(--ink);
+    border: 1px solid var(--line-solid);
+  }
+
+  .panel {
+    width: 360px;
+    flex: 0 0 360px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    color: var(--paper);
+  }
+
+  .hd {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 8px;
+  }
+  .hd .k { font-size: 11px; letter-spacing: .1em; color: var(--accent); }
+  .hd .v { font-size: 12px; color: var(--mute); }
+
+  .sec { padding: 16px 0; border-bottom: 1px solid var(--line); }
+  .sec:last-child { border-bottom: 0; }
+
+  .lb {
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--mute-2);
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .lb .n { color: var(--accent); }
+
+  .chk {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    line-height: 1.55;
+    cursor: pointer;
+    font-family: var(--font-body);
+    font-size: 13px;
+  }
+  .chk input { margin: 2px 0 0; width: 16px; height: 16px; accent-color: var(--accent); flex: 0 0 16px; }
+
+  .note {
+    margin: 10px 0 0;
+    font-size: 11.5px;
+    line-height: 1.6;
+    color: var(--mute);
+    border-left: 2px solid var(--accent);
+    padding-left: 10px;
+  }
+
+  input[type=file] {
+    width: 100%;
+    font: inherit;
+    font-size: 12px;
+    color: var(--mute);
+    border: 1px dashed var(--line);
+    padding: 10px;
+    background: var(--ink-2);
+    cursor: pointer;
+  }
+  input[type=file]::file-selector-button {
+    font: inherit;
+    font-size: 12px;
+    background: transparent;
+    color: var(--paper);
+    border: 1px solid var(--line);
+    padding: 4px 10px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+
+  textarea {
+    width: 100%;
+    font: inherit;
+    font-size: 12.5px;
+    line-height: 1.7;
+    color: var(--paper);
+    background: var(--ink-2);
+    border: 1px solid var(--line);
+    padding: 8px 10px;
+    resize: vertical;
+    outline: none;
+  }
+  textarea:focus { border-color: var(--accent); }
+
+  .row { display: flex; gap: 8px; }
+  .row > * { flex: 1; }
+
+  button {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 0;
+    padding: 11px 12px;
+    cursor: pointer;
+    transition: background 140ms cubic-bezier(.2,0,.1,1), border-color 140ms cubic-bezier(.2,0,.1,1);
+  }
+  button:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+  button:active:not(:disabled) { background: var(--ink-3); }
+
+  button[data-primary] { border-color: var(--accent); color: var(--accent); }
+  button[data-primary]:hover:not(:disabled) { background: var(--accent); color: var(--ink); }
+
+  button:disabled { opacity: .35; cursor: not-allowed; border-color: var(--line-solid); color: var(--mute-2); }
+
+  #race { margin-bottom: 8px; width: 100%; padding: 14px; }
+
+  .readout {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+    font-size: 11px;
+    letter-spacing: .08em;
+    color: var(--mute-2);
+  }
+  .readout b { color: var(--paper); font-weight: 500; font-variant-numeric: tabular-nums; }
+
+  .stat { display: flex; justify-content: space-between; padding: 3px 0; color: var(--mute); }
+  .stat b { color: var(--paper); font-weight: 500; font-variant-numeric: tabular-nums; }
+
+  @media (max-width: 900px) {
+    .wrap { flex-direction: column; align-items: stretch; }
+    .panel { width: auto; flex: none; }
+    #stage { height: auto; width: 100%; }
+  }

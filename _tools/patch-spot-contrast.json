@@ -1,0 +1,9 @@
+{
+  "edits": [
+    {
+      "file": "_stemlab/projects/spot-diff-car/src/main.js",
+      "old": "    T(String(i + 1).padStart(2, '0'), M, ry + 36, 15, 700, FONT_MONO, got ? PAL.accentLit : 'rgba(242,240,235,0.26)', 1.6);\n    T(d.zh, M + 50, ry + 30, 20, 600, FONT_DISP, got ? PAL.paper : 'rgba(242,240,235,0.40)', 0.3);\n    T(d.en, M + 50, ry + 50, 10, 400, FONT_MONO, got ? PAL.paperDim : 'rgba(242,240,235,0.20)', 1.6);\n    T(got ? `${d.a}${d.unit}  /  ${d.b}${d.unit}` : '—  /  —', R, ry + 36, 17, got ? 700 : 400,\n      FONT_MONO, got ? PAL.paper : 'rgba(242,240,235,0.20)', got ? -0.4 : 1.2, 'right');",
+      "new": "    /* 没找到的那几行不能压到看不见。0.20 的透明度在多暗底上合成出来只有 57 亮度，\n       整张表在初始态读起来像空表格。0.40 还压得住主次，同时看得出这是六行。 */\n    T(String(i + 1).padStart(2, '0'), M, ry + 36, 15, 700, FONT_MONO, got ? PAL.accentLit : 'rgba(242,240,235,0.40)', 1.6);\n    T(d.zh, M + 50, ry + 30, 20, 600, FONT_DISP, got ? PAL.paper : 'rgba(242,240,235,0.56)', 0.3);\n    T(d.en, M + 50, ry + 50, 10, 400, FONT_MONO, got ? PAL.paperDim : 'rgba(242,240,235,0.32)', 1.6);\n    T(got ? `${d.a}${d.unit}  /  ${d.b}${d.unit}` : '—  /  —', R, ry + 36, 17, got ? 700 : 400,\n      FONT_MONO, got ? PAL.paper : 'rgba(242,240,235,0.40)', got ? -0.4 : 1.2, 'right');"
+    }
+  ]
+}

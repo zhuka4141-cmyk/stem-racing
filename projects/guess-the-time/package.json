@@ -1,0 +1,14 @@
+{
+  "name": "guess-the-time",
+  "version": "1.0.0",
+  "private": true,
+  "description": "猜它跑多少秒 — a 20 m CO2 dragster time-guessing game, native WebGPU with a Canvas2D fallback",
+  "type": "module",
+  "scripts": {
+    "gate": "node tests/gate.mjs",
+    "gate:2d": "node tests/gate.mjs --2d",
+    "parity": "node tests/parity.mjs",
+    "numbers": "node tests/numbers.mjs",
+    "bands": "node tests/bands.mjs qa/export.png"
+  }
+}

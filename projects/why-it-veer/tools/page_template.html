@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="zh-CN">
+<meta charset="utf-8">
+<title>why-it-veer · 偏移诊断 01</title>
+<style>
+  html,body{margin:0;background:#07080a;color:#e8e6e1;
+    font-family:"Microsoft YaHei","Microsoft YaHei UI",sans-serif}
+  #wrap{display:flex;gap:20px;padding:18px;align-items:flex-start;flex-wrap:wrap}
+  #cv{width:540px;height:960px;background:#0C0D0F;display:block;
+      box-shadow:0 0 0 1px #2a2e33}
+  #side{font:13px/1.7 Consolas,monospace;color:#8a8f96;min-width:260px}
+  #side b{color:#e8590c;font-weight:600}
+  button{font:12px/1 Consolas,monospace;background:#141619;color:#e8e6e1;
+    border:1px solid #2a2e33;padding:8px 10px;margin:0 6px 6px 0;cursor:pointer}
+  button:hover{border-color:#e8590c}
+  kbd{background:#141619;border:1px solid #2a2e33;padding:1px 5px}
+</style>
+<div id="wrap">
+  <canvas id="cv" width="1080" height="1920"></canvas>
+  <div id="side">
+    <div><b>偏移诊断 01</b> · 1080x1920 · 30fps</div>
+    <div id="stat">--</div>
+    <hr style="border:0;border-top:1px solid #2a2e33;margin:10px 0">
+    <div><button id="bPlay">播放 / 暂停</button><button id="bPrev">◀ 帧</button>
+      <button id="bNext">帧 ▶</button></div>
+    <div><button id="bPng">导出竖版 PNG</button></div>
+    <div><button id="bCov">导出 4:5 封面</button></div>
+    <div><button id="bAll">全部导出</button></div>
+    <hr style="border:0;border-top:1px solid #2a2e33;margin:10px 0">
+    <div>空格 播放/暂停 · ← → 逐帧</div>
+  </div>
+</div>
+<script>
+"use strict";
+const DATA = /*__DATA__*/;
+const W = DATA.w, H = DATA.h, FPS = DATA.fps;
+const N = Math.round(DATA.duration * FPS);
+const P = DATA.palette;
+const SAFE = { x0: 60, x1: 930, y0: 240, y1: 1480 };
+
+const cv = document.getElementById('cv');
+const ctx = cv.getContext('2d', { willReadFrequently: true });
+let frame = 0, playing = true, errs = [];
+
+function hex(h) { return h; }
+function cjk(size, weight) {
+  return (weight || 400) + ' ' + size + 'px "Microsoft YaHei","Microsoft YaHei UI",sans-serif';
+}
+function mono(size, bold) {
+  return (bold ? '700 ' : '400 ') + size + 'px Consolas,"Courier New",monospace';
+}
+function f2(v) { return Math.abs(v) < 10 ? v.toFixed(2) : v.toFixed(1); }
+
+function beatAt(t) {
+  for (let i = 0; i < DATA.beats.length; i++) {
+    const b = DATA.beats[i];
+    if (t >= b.t0 && t < b.t1) return b;
+  }
+  return DATA.beats[DATA.beats.length - 1];
+}
+function beatIndex(t) {
+  for (let i = 0; i < DATA.beats.length; i++) {
+    const b = DATA.beats[i];
+    if (t >= b.t0 && t < b.t1) return i;
+  }
+  return DATA.beats.length - 1;
+}
+
+/* piecewise video-time -> sim-time, matching src/blender/build.py */
+const KEYS = [[0.0, 0.0], [2.2, 0.090], [5.2, 0.090], [9.0, 0.130], [11.5, 0.180],
+              [14.0, 0.230], [16.5, 0.280], [19.0, 0.900], [24.0, DATA.num.t20]];
+function simTime(vt) {
+  if (vt >= 24.0) vt -= 24.0;
+  for (let i = 0; i < KEYS.length - 1; i++) {
+    const a = KEYS[i], b = KEYS[i + 1];
+    if (vt >= a[0] && vt <= b[0]) {
+      const f = b[0] === a[0] ? 0 : (vt - a[0]) / (b[0] - a[0]);
+      return a[1] + (b[1] - a[1]) * f;
+    }
+  }
+  return KEYS[KEYS.length - 2][1];
+}
+function sampleSim(st) {
+  const tr = DATA.trace;
+  if (st <= tr[0][0]) return { t: tr[0][0], s: tr[0][1], psi: tr[0][2] };
+  if (st >= tr[tr.length - 1][0]) {
+    const e = tr[tr.length - 1];
+    return { t: e[0], s: e[1], psi: e[2] };
+  }
+  for (let i = 0; i < tr.length - 1; i++) {
+    if (st >= tr[i][0] && st <= tr[i + 1][0]) {
+      const a = tr[i], b = tr[i + 1];
+      const f = b[0] === a[0] ? 0 : (st - a[0]) / (b[0] - a[0]);
+      return { t: st, s: a[1] + (b[1] - a[1]) * f, psi: a[2] + (b[2] - a[2]) * f };
+    }
+  }
+  const e = tr[tr.length - 1];
+  return { t: e[0], s: e[1], psi: e[2] };
+}
+
+function fmtSub(s, n) {
+  return s.replace(/\{(\w+):\.(\d)f\}/g, (m, k, d) => (n[k] !== undefined ? n[k].toFixed(+d) : m));
+}
+function runsWidth(runs) {
+  let w = 0;
+  for (const [fk, txt] of runs) {
+    for (const ch of txt) {
+      if (/[\u4e00-\u9fff]/.test(ch)) w += 1.0;
+      else if (ch === ' ') w += 0.3;
+      else w += 0.56;
+    }
+  }
+  return w;
+}
+function drawRuns(runs, x, y, size, color) {
+  let cx = x;
+  ctx.textBaseline = 'alphabetic';
+  for (const [fk, txt] of runs) {
+    if (!txt) continue;
+    const latin = (fk === 'mono' || fk === 'mono_b' || fk === 'cond');
+    ctx.font = latin ? mono(size, fk === 'mono_b') : cjk(size, fk === 'cjk_b' ? 700 : 400);
+    ctx.fillStyle = color;
+    ctx.textAlign = 'left';
+    ctx.fillText(txt, cx, y + size * 0.82);
+    for (const ch of txt) {
+      if (/[\u4e00-\u9fff]/.test(ch)) cx += size * 1.0;
+      else if (ch === ' ') cx += size * 0.3;
+      else cx += size * 0.56;
+    }
+  }
+  return cx - x;
+}
+
+/* plan-view detail: rail, guide posts, body flank, lane wall */
+function drawPlan(psi, s) {
+  const PXMM = 4.0, cx = 540, noseY = 660;
+  const clipY0 = 600, clipY1 = 1180;
+  ctx.save();
+  ctx.beginPath(); ctx.rect(0, clipY0, W, clipY1 - clipY0); ctx.clip();
+  ctx.fillStyle = '#16181C';
+  ctx.fillRect(0, clipY0, W, clipY1 - clipY0);
+
+  const bodyW = 69 * PXMM, bodyL = 228 * PXMM;
+  const cyBody = noseY + 114 * PXMM;
+  const wallX = cx + 37.5 * PXMM;
+
+  /* lane wall */
+  ctx.fillStyle = P.wall;
+  ctx.fillRect(wallX, clipY0, 6 * PXMM, clipY1 - clipY0);
+  ctx.fillStyle = P.hair;
+  ctx.fillRect(wallX, clipY0, 2, clipY1 - clipY0);
+
+  /* centre rail */
+  ctx.fillStyle = P.rail;
+  ctx.fillRect(cx - 1.5 * PXMM, clipY0, 3 * PXMM, clipY1 - clipY0);
+
+  /* track graduations every 100 mm of car travel */
+  ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+  ctx.lineWidth = 2;
+  const off = (s * 1000 % 100) * PXMM;
+  for (let y = clipY0 - off; y < clipY1; y += 100 * PXMM) {
+    ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+  }
+
+  /* car, yawed about the guide pin */
+  ctx.save();
+  ctx.translate(cx, cyBody);
+  ctx.rotate(-psi * Math.PI / 180);
+  ctx.fillStyle = P.body;
+  ctx.fillRect(-bodyW / 2, -bodyL / 2, bodyW, bodyL);
+  ctx.fillStyle = P.pod;
+  ctx.fillRect(-bodyW / 2 - 10, -bodyL / 2 + 120, 14, bodyL - 240);
+  ctx.fillRect(bodyW / 2 - 4, -bodyL / 2 + 120, 14, bodyL - 240);
+  ctx.fillStyle = P.canopy;
+  ctx.fillRect(-bodyW * 0.22, -bodyL / 2 + 150, bodyW * 0.44, 180);
+  /* guide fork posts straddling the rail */
+  ctx.fillStyle = P.pin;
+  for (const dx of [-3 * PXMM, 3 * PXMM]) {
+    ctx.beginPath();
+    ctx.arc(dx, -bodyL / 2 + 40, 1.2 * PXMM, 0, Math.PI * 2);
+    ctx.fill();
+  }
+  /* wheels */
+  ctx.fillStyle = P.wheel;
+  for (const sx of [-1, 1]) {
+    for (const sy of [-1, 1]) {
+      ctx.fillRect(sx * (bodyW / 2 - 6) - 8, sy * 75 * PXMM - 26, 16, 52);
+    }
+  }
+  ctx.restore();
+
+  /* centre of mass, offset to +X by d */
+  const comX = cx + DATA.num.d_now * PXMM;
+  const comY = cyBody - 35 * PXMM + 40;
+  ctx.strokeStyle = P.warn; ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.arc(comX, comY, 12 * PXMM, 0, Math.PI * 2); ctx.stroke();
+  ctx.fillStyle = P.warn;
+  ctx.beginPath(); ctx.arc(comX, comY, 4, 0, Math.PI * 2); ctx.fill();
+
+  /* dimension: offset from centreline */
+  ctx.strokeStyle = P.warn; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(cx, comY - 60); ctx.lineTo(comX, comY - 60); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(cx, comY - 72); ctx.lineTo(cx, comY - 48); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(comX, comY - 72); ctx.lineTo(comX, comY - 48); ctx.stroke();
+  ctx.font = mono(48, true); ctx.fillStyle = P.warn; ctx.textAlign = 'center';
+  ctx.fillText(DATA.num.d_now.toFixed(1) + ' mm', (cx + comX) / 2, comY - 82);
+
+  /* dimension: nose gap to the wall */
+  const noseX = cx + (DATA.num.d_now - DATA.num.nose) * PXMM;
+  ctx.strokeStyle = P.accent; ctx.lineWidth = 3;
+  const gapY = clipY1 - 70;
+  ctx.beginPath(); ctx.moveTo(noseX, gapY); ctx.lineTo(wallX, gapY); ctx.stroke();
+  ctx.font = mono(44, true); ctx.fillStyle = P.accent; ctx.textAlign = 'right';
+  ctx.fillText(DATA.num.nose.toFixed(1) + ' mm', wallX - 8, gapY - 14);
+
+  ctx.restore();
+}
+
+function draw() {
+  const t = frame / FPS;
+  const b = beatAt(t);
+  const bi = beatIndex(t);
+  const st = sampleSim(simTime(t));
+  const n = DATA.num;
+
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.fillStyle = P.bg; ctx.fillRect(0, 0, W, H);
+
+  drawPlan(st.psi, st.s);
+
+  /* bands */
+  ctx.fillStyle = P.bg;
+  ctx.fillRect(0, 0, W, 600);
+  ctx.fillRect(0, 1180, W, H - 1180);
+  ctx.fillStyle = P.hair;
+  ctx.fillRect(0, 599, W, 2); ctx.fillRect(0, 1179, W, 2);
+
+  /* kicker */
+  ctx.font = cjk(48, 400); ctx.fillStyle = P.dim; ctx.textAlign = 'left';
+  ctx.fillText(b.kicker, 60, 248 + 38);
+  const span = b.t1 - b.t0;
+  const dsim = Math.abs(simTime(Math.min(t + span, 23.9)) - simTime(t));
+  if (dsim > 1e-6 && span / dsim > 1.5) {
+    ctx.textAlign = 'right';
+    ctx.fillText('慢放 ×' + Math.round(span / dsim), 930, 248 + 38);
+  }
+  ctx.fillStyle = P.hair; ctx.fillRect(60, 311, 870, 2);
+
+  /* headline */
+  const runs = b.head.filter(r => r[1]);
+  const size = 108, lh = 120;
+  const top = 330 + Math.max(0, Math.floor((258 - runs.length * lh) / 2));
+  runs.forEach((r, i) => drawRuns([r], 60, top + i * lh, size, P.text));
+
+  /* sub */
+  ctx.fillStyle = P.hair; ctx.fillRect(60, 1205, 870, 2);
+  drawRuns([['cjk', fmtSub(b.sub, n)]], 60, 1232, 54, P.text);
+
+  /* panel */
+  if (b.panel === 'bar') {
+    ctx.font = mono(64, false); ctx.fillStyle = P.text; ctx.textAlign = 'left';
+    ctx.fillText(st.s.toFixed(2) + ' m / ' + n.track.toFixed(0) + ' m', 60, 1312 + 48);
+    ctx.fillStyle = P.hair; ctx.fillRect(60, 1402, 870, 4);
+    const bx = 60 + 870 * Math.min(1, st.s / n.track);
+    if (bx > 63) { ctx.fillStyle = P.accent; ctx.fillRect(60, 1393, bx - 60, 22); }
+    const cx2 = 60 + 870 * Math.min(1, n.contact / n.track);
+    ctx.fillStyle = P.warn; ctx.fillRect(cx2 - 2, 1372, 4, 62);
+    ctx.font = mono(48, false); ctx.fillStyle = P.dim;
+    ctx.textAlign = 'left'; ctx.fillText('0', 60, 1428 + 40);
+    ctx.textAlign = 'right'; ctx.fillText(n.track.toFixed(0) + ' m', 930, 1428 + 40);
+    ctx.font = cjk(48, 400); ctx.fillStyle = P.warn; ctx.textAlign = 'right';
+    ctx.fillText('贴合 ' + n.contact.toFixed(3) + ' m', 930, 1312 + 38);
+  } else if (b.panel === 'nums') {
+    b.nums.forEach(([label, key, unit], i) => {
+      const x = 60 + i * 292;
+      ctx.font = cjk(48, 400); ctx.fillStyle = P.dim; ctx.textAlign = 'left';
+      ctx.fillText(label, x, 1318 + 38);
+      const val = f2(n[key]);
+      ctx.font = mono(84, true); ctx.fillStyle = P.text;
+      ctx.fillText(val, x, 1366 + 70);
+      ctx.font = cjk(48, 400); ctx.fillStyle = P.dim;
+      ctx.fillText(unit, x + 8 + 0.56 * 84 * val.length, 1400 + 38);
+    });
+  }
+  document.getElementById('stat').textContent =
+    'frame ' + frame + '/' + (N - 1) + '  t=' + t.toFixed(2) + 's  s=' + st.s.toFixed(2) +
+    'm  ψ=' + st.psi.toFixed(2) + '°  beat ' + bi;
+}
+
+function render() { try { draw(); } catch (e) { errs.push(String(e)); } }
+
+function tick(ts) {
+  if (playing) {
+    frame = (frame + 1) % N;
+    render();
+  }
+  requestAnimationFrame(tick);
+}
+
+/* ---------- export ---------- */
+function bytesOf(dataURL) {
+  const b64 = dataURL.split(',')[1] || '';
+  return Math.floor(b64.length * 3 / 4) - (b64.endsWith('==') ? 2 : b64.endsWith('=') ? 1 : 0);
+}
+function pngBytes() {
+  render();
+  const u = cv.toDataURL('image/png');
+  if (u.slice(0, 22) !== 'data:image/png;base64,') errs.push('export not PNG');
+  return bytesOf(u);
+}
+function save(name, dataURL) {
+  const a = document.createElement('a');
+  a.href = dataURL; a.download = name; a.click();
+}
+function exportPNG() {
+  const n = pngBytes();
+  save(DATA.id + '-' + DATA.episode + '-1080x1920.png', cv.toDataURL('image/png'));
+  return n;
+}
+function exportCover() {
+  render();
+  const c2 = document.createElement('canvas');
+  c2.width = 1080; c2.height = 1350;
+  const g = c2.getContext('2d');
+  g.fillStyle = P.bg; g.fillRect(0, 0, 1080, 1350);
+  g.drawImage(cv, 0, 285, 1080, 1350, 0, 0, 1080, 1350);
+  const u = c2.toDataURL('image/png');
+  save(DATA.id + '-' + DATA.episode + '-1080x1350.png', u);
+  return bytesOf(u);
+}
+
+/* ---------- metrics ---------- */
+function metrics() {
+  render();
+  const d = ctx.getImageData(0, 0, W, H).data;
+  const lum = i => 0.2126 * d[i] + 0.7152 * d[i + 1] + 0.0722 * d[i + 2];
+  let ink = 0, tot = 0;
+  const cols = new Set();
+  for (let y = SAFE.y0; y < SAFE.y1; y += 3) {
+    for (let x = SAFE.x0; x < SAFE.x1; x += 3) {
+      const i = (y * W + x) * 4;
+      tot++;
+      if (lum(i) > 24) {
+        ink++;
+        cols.add(((d[i] >> 3) << 10) | ((d[i + 1] >> 3) << 5) | (d[i + 2] >> 3));
+      }
+    }
+  }
+  return { inkPct: +(ink / tot * 100).toFixed(2), colours: cols.size,
+           frame: frame, t: frame / FPS };
+}
+
+function selfTest() {
+  const e = [];
+  if (!cv || cv.width !== 1080 || cv.height !== 1920) e.push('canvas 尺寸错');
+  render();
+  const m = metrics();
+  if (m.inkPct < 8) e.push('安全区墨量 ' + m.inkPct + '%');
+  if (m.colours < 48) e.push('色彩 ' + m.colours);
+  const n = DATA.num;
+  if (!(n.t20 >= 1.0 && n.t20 <= 1.25)) e.push('20m 成绩 ' + n.t20);
+  if (!(n.v >= 15 && n.v <= 22)) e.push('末速 ' + n.v);
+  if (!(n.d_now > n.dcrit)) e.push('偏移未超临界');
+  return { ok: e.length === 0, errs: e };
+}
+
+window.__app = {
+  canvas: cv,
+  getState: () => ({ frame: frame, t: frame / FPS, playing: playing,
+                     beat: beatIndex(frame / FPS), total: N }),
+  getMetrics: metrics,
+  set: (k, v) => {
+    if (k === 'frame') { frame = Math.max(0, Math.min(N - 1, v | 0)); render(); }
+    else if (k === 'playing') playing = !!v;
+    return { frame: frame, playing: playing };
+  },
+  selfTest: selfTest,
+  exportPNG: exportPNG,
+  exportCover: exportCover,
+  downloadAll: () => ({ png: exportPNG(), cover: exportCover() }),
+  data: DATA
+};
+
+document.getElementById('bPlay').onclick = () => { playing = !playing; };
+document.getElementById('bPrev').onclick = () => { playing = false; frame = (frame + N - 1) % N; render(); };
+document.getElementById('bNext').onclick = () => { playing = false; frame = (frame + 1) % N; render(); };
+document.getElementById('bPng').onclick = () => exportPNG();
+document.getElementById('bCov').onclick = () => exportCover();
+document.getElementById('bAll').onclick = () => window.__app.downloadAll();
+addEventListener('keydown', ev => {
+  if (ev.code === 'Space') { playing = !playing; ev.preventDefault(); }
+  if (ev.code === 'ArrowRight') { playing = false; frame = (frame + 1) % N; render(); }
+  if (ev.code === 'ArrowLeft') { playing = false; frame = (frame + N - 1) % N; render(); }
+});
+
+render();
+requestAnimationFrame(tick);
+</script>
+</html>

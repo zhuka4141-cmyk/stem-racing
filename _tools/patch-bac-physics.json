@@ -1,0 +1,9 @@
+{
+  "edits": [
+    {
+      "file": "_stemlab/projects/build-a-car/src/physics.js",
+      "old": "export const WHEELBASE = 0.170;  // m, front axle to rear axle",
+      "new": "export const AXLE_F = 0.030;     // m, front axle measured from the nose\nexport const AXLE_R = 0.170;     // m, rear axle measured from the nose\nexport const WHEELBASE = AXLE_R - AXLE_F;   // 0.140 m — 真正的轴距，不是后轴位置"
+    }
+  ]
+}

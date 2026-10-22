@@ -1,0 +1,24 @@
+{
+  "edits": [
+    {
+      "file": "_stemlab/projects/spot-diff-car/src/physics.js",
+      "old": "/* Wheel inertia as I_w = k·m_w·r². k = 0.6 sits between a solid disc (0.5) and\n   a thin ring (1.0), which is what a moulded wheel with a hub behaves like. */\nexport const WHEEL_INERTIA_K = 0.6;",
+      "new": "/* Wheel inertia as I_w = k·m_w·r². A moulded wheel with a thin rim and a light\n   hub behaves like a ring, k ≈ 1.0. That is the value which reproduces the\n   team's measured I_w = 4.5e-7 kg·m² at r = 0.011 m with a 3.72 g wheel:\n   I = m·r² = 3.72e-3 × 1.21e-4 = 4.50e-7.\n   Dropping k below 1 here silently shrinks the rotational term while leaving the\n   wheel mass alone, so the pair (k, m_w) has to stay consistent with it. */\nexport const WHEEL_INERTIA_K = 1.0;"
+    },
+    {
+      "file": "_stemlab/projects/spot-diff-car/src/main.js",
+      "old": "const BALLAST = 0.030;        // kg",
+      "new": "const CLASS_MASS = 0.065;     // kg 组别限重，配重补到这条线"
+    },
+    {
+      "file": "_stemlab/projects/spot-diff-car/src/main.js",
+      "old": "  const totalMass = bodyM + BALLAST + wheelTotal;\n  const em = effectiveMass(totalMass, wheels);\n\n  const comX = (bodyM * 0.100 + BALLAST * (p.ballastX / 1000)\n    + (wheelTotal / 2) * AXLE_F + (wheelTotal / 2) * AXLE_R) / totalMass;",
+      "new": "  /* 组别限重 65 g。轮子轻就多塞配重补回来，总质量不动，两台车才在同一个\n     重量级里比，剩下的差异只剩气动和转动惯量。 */\n  const totalMass = CLASS_MASS;\n  const ballast = Math.max(0, CLASS_MASS - bodyM - wheelTotal);\n  const em = effectiveMass(totalMass, wheels);\n\n  const comX = (bodyM * 0.100 + ballast * (p.ballastX / 1000)\n    + (wheelTotal / 2) * AXLE_F + (wheelTotal / 2) * AXLE_R) / totalMass;"
+    },
+    {
+      "file": "_stemlab/projects/spot-diff-car/src/main.js",
+      "old": "    cd, area, bodyM, totalMass, mEq: em.total, rot: em.rot,",
+      "new": "    cd, area, bodyM, ballast, totalMass, mEq: em.total, rot: em.rot,"
+    }
+  ]
+}

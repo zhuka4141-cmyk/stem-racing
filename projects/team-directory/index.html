@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>队员名录 · team-directory</title>
+<link rel="stylesheet" href="./design-tokens.css">
+<link rel="stylesheet" href="./panel.css">
+<style>
+  /* 这个项目面板只多一条：搜索框下面留一点空 */
+  #q { margin-bottom: 10px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <canvas id="stage" width="1080" height="1920"></canvas>
+
+  <aside class="panel" id="panel">
+    <div class="hd">
+      <span class="k">TEAM-DIRECTORY</span>
+      <span class="v">队员名录</span>
+    </div>
+
+    <section class="sec">
+      <div class="lb"><span>01 / 搜索姓名</span><span class="n" id="qHit">0</span></div>
+      <input type="text" id="q" placeholder="输入姓名或角色里的字" spellcheck="false" autocomplete="off">
+      <p class="note">数据写死在 <code>src/team.js</code> 里，是本地常量。页面不读任何外部文件，也不联网。</p>
+    </section>
+
+    <section class="sec">
+      <div class="lb"><span>02 / 按角色筛选</span></div>
+      <div class="chips" id="roles"></div>
+    </section>
+
+    <section class="sec">
+      <div class="lb"><span>03 / 导出</span></div>
+      <div class="row">
+        <button id="ex1" type="button">9:16 竖版</button>
+        <button id="ex2" type="button">4:5 封面</button>
+      </div>
+      <div style="margin-top:12px">
+        <div class="stat"><span>在册</span><b id="sTotal">0</b></div>
+        <div class="stat"><span>当前显示</span><b id="sShown">0</b></div>
+        <div class="stat"><span>当前筛选</span><b id="sRole">全部</b></div>
+      </div>
+    </section>
+  </aside>
+</div>
+
+<script src="./dist/app.js"></script>
+</body>
+</html>

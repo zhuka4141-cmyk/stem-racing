@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>20 m 直线加速 · 成绩预测实验室</title>
+<meta name="description" content="STEM Racing 20 m 气动车的一维纵向动力学模型：RK4 步进，推力按衰减曲线积分，参数标注验证状态。">
+<!-- 空图标：避免浏览器自动去要 /favicon.ico（file:// 与 http 下都会 404） -->
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="styles/lab.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead__row">
+    <span class="label">STEM Racing / Lap-Time Lab</span>
+    <span class="label" id="mh-meta">赛道 20.000 m &middot; RK4 &middot; &Delta;t 1.0 ms</span>
+  </div>
+  <h1 class="masthead__title">20 m 直线加速成绩预测</h1>
+  <p class="masthead__dek">
+    六个参数推一次常微分方程。推力按衰减曲线逐毫秒积分，不用平均值。每个常数旁边标着它是
+    <b class="tag tag--fixed">fixed</b>、<b class="tag tag--typical">typical</b> 还是
+    <b class="tag tag--verify">VERIFY</b> &mdash; 鼠标停上去看这个数凭什么可信。
+  </p>
+</header>
+
+<main class="deck">
+  <div class="deck__stack">
+
+    <section class="panel" aria-labelledby="t-readout">
+      <div class="panelhead">
+        <span class="label" id="t-readout">模型预测成绩</span>
+        <span class="label">t @ 20.000 m</span>
+      </div>
+      <div class="readout">
+        <span class="readout__num" id="v-time" aria-live="polite">&mdash;</span>
+        <span class="readout__unit">s</span>
+      </div>
+
+      <div class="bandstrip" id="bandstrip"
+           role="img" aria-label="成绩合理区间 1.00 至 1.25 秒">
+        <div class="bandstrip__zone" id="bandzone"></div>
+        <div class="bandstrip__mark" id="bandmark"></div>
+      </div>
+      <div class="bandstrip__scale">
+        <span>0.90</span><span>1.00&ndash;1.25 合理区间</span><span>1.40 s</span>
+      </div>
+
+      <dl class="stats" id="stats"></dl>
+    </section>
+
+    <section class="alert" id="band-alert" hidden role="alert">
+      <div class="alert__hd">模型超出合理区间</div>
+      <div class="alert__bd" id="band-alert-body"></div>
+    </section>
+
+    <section class="panel" aria-labelledby="t-params">
+      <div class="panelhead">
+        <span class="label" id="t-params">参数 &middot; 拖动即时重算</span>
+        <button id="btn-reset">复位</button>
+      </div>
+      <div id="controls"></div>
+    </section>
+
+  </div>
+
+  <div class="deck__charts">
+    <div class="chart"><canvas id="c-speed" role="img" aria-label="速度随距离变化曲线，横轴米，纵轴米每秒"></canvas></div>
+    <div class="chart"><canvas id="c-energy" role="img" aria-label="推力做功去向堆叠条，单位焦耳"></canvas></div>
+    <div class="chart"><canvas id="c-delta" role="img" aria-label="当前参数与队内基准的成绩差值，单位毫秒"></canvas></div>
+    <div class="chart"><canvas id="c-lat" role="img" aria-label="质心横向偏移与车尾横向偏移的关系，单位毫米"></canvas></div>
+  </div>
+</main>
+
+<section class="consts" aria-labelledby="t-consts">
+  <div class="panelhead">
+    <span class="label" id="t-consts">常数与可信度</span>
+    <span class="label">悬停查看依据</span>
+  </div>
+  <div class="consts__grid" id="consts"></div>
+</section>
+
+<div class="footbar">
+  <p class="footbar__note">
+    模型只解一维纵向：车必须沿着导轨走。横向那两栏是估计，不是仿真。导出图 1080&times;1920，
+    内容落在 Reels 安全区内。
+  </p>
+  <button id="btn-export" data-primary class="slash">导出 1080&times;1920</button>
+</div>
+
+<div class="tip" id="tip" role="tooltip" aria-hidden="true"></div>
+
+<script src="src/physics.js"></script>
+<script src="src/charts.js"></script>
+<script src="src/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>猜它跑多少秒 · STEM Racing</title>
+<link rel="icon" href="data:,">
+<style>
+  html, body {
+    margin: 0; padding: 0;
+    background: #0B0B0C;
+    width: 100%; height: 100%;
+    overflow: hidden;
+  }
+  #stage {
+    position: absolute;
+    width: 1080px; height: 1920px;
+    background: #0B0B0C;
+  }
+  #stage .layer {
+    position: absolute;
+    left: 0; top: 0;
+    width: 1080px; height: 1920px;
+    display: block;
+  }
+  #ui { pointer-events: none; }
+
+  /* Real buttons laid exactly over the painted choice areas. Transparent text
+     keeps the canvas typography authoritative while staying keyboard reachable. */
+  #stage .hit {
+    position: absolute;
+    margin: 0; padding: 0;
+    background: transparent;
+    border: 0;
+    color: transparent;
+    font-size: 1px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+  #stage .hit:focus-visible {
+    outline: 4px solid #E8590C;
+    outline-offset: 4px;
+  }
+  #stage .hit:disabled { cursor: default; }
+
+  /* Page controls live in the dead band under the safe area, so they never
+     collide with content and never reach the exported PNG. */
+  #chrome {
+    position: absolute;
+    left: 60px; top: 1600px;
+    display: flex;
+    gap: 14px;
+    z-index: 10;
+  }
+  #chrome button {
+    font: 400 48px/1 Consolas, "Microsoft YaHei", "Noto Sans SC", sans-serif;
+    color: #8A8A85;
+    background: transparent;
+    border: 2px solid #3A3A3E;
+    padding: 16px 30px;
+    cursor: pointer;
+  }
+  #chrome button:hover { border-color: #E8590C; color: #E8590C; }
+  #chrome button:focus-visible { outline: 3px solid #E8590C; outline-offset: 3px; }
+
+  #out { display: none; }
+</style>
+</head>
+<body>
+  <div id="stage">
+    <canvas id="ui" class="layer" width="1080" height="1920"></canvas>
+
+    <div id="chrome">
+      <button id="btn-export" type="button">导出 PNG</button>
+      <button id="btn-again" type="button">换一台车</button>
+    </div>
+  </div>
+
+  <canvas id="out" width="1080" height="1920"></canvas>
+
+  <script src="src/core.js"></script>
+  <script src="src/physics.js"></script>
+  <script src="src/car.js"></script>
+  <script src="src/backend-2d.js"></script>
+  <script src="src/backend-gpu.js"></script>
+  <script src="src/scene.js"></script>
+  <script src="src/ui.js"></script>
+  <script src="src/app.js"></script>
+</body>
+</html>
