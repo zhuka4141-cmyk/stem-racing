@@ -1,5 +1,6 @@
 # 两车同跑 · Head to Head
 
+> 在线版：https://zhuka4141-cmyk.github.io/stem-racing/projects/head-to-head/
 把两台 CO₂ 车放在同一条 20 米直道上，逐毫秒积分，看到底谁先到线、差多少、差在哪一段。
 
 这是车队内容计划的第 03 期。纯静态网页，双击 `index.html` 就能开，不联网，不上传任何数据。

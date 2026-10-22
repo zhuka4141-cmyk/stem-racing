@@ -1,5 +1,6 @@
 # 闪灯反应计时 · Reaction Trainer
 
+> 在线版：https://zhuka4141-cmyk.github.io/stem-racing/projects/reaction-trainer/
 等灯，闪灯瞬间开表，点到就停。跑满五次出平均、最快、最慢，再导出成一张 1080×1920 的成绩卡。
 
 这是车队内容计划的第 04 期。纯静态网页，双击 `index.html` 就能开，不联网，不上传任何数据。

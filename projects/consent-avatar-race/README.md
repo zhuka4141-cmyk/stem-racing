@@ -1,5 +1,6 @@
 # consent-avatar-race —— 起跑线
 
+> 在线版：https://zhuka4141-cmyk.github.io/stem-racing/projects/consent-avatar-race/
 把队友的照片在本机裁成圆形头像，排到 8 条道上，点「发车」出一张 1080×1920 的计时表卡片。
 
 这个项目是重做版。上一版 `avatar-racing` 我去抓了别人的 IG 头像存到本地，账号被限过一次，理由写的是"自动化"。这次的做法反过来：**照片只能由本人在这台机器上用文件选择框交给自己，页面从头到尾没有联网出口。**

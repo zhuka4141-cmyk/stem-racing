@@ -1,5 +1,6 @@
 # 虚拟风洞 · 迎角与阻力
 
+> 在线版：https://zhuka4141-cmyk.github.io/stem-racing/projects/wind-tunnel-3d/
 一条 20 米的直线加速赛道，我们把迎角从 0° 拧到 8°，成绩掉了 0.09 秒。
 这个页面就是拿来解释这 0.09 秒花在哪儿的。
 

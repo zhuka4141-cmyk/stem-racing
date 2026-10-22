@@ -1,5 +1,6 @@
 # turbulence-streak · 车尾的卡门涡街
 
+> 在线版：https://zhuka4141-cmyk.github.io/stem-racing/projects/turbulence-streak/
 一根 CO₂ 车跑完 20 m，车屁股后面一直在甩涡。这个页面就是把那一小片尾流放大成一整张图：
 上下两列涡反着转、交替脱、间距固定，然后拿滑杆去问它"车速变了会怎样"。
 

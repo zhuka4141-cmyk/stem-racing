@@ -1,5 +1,6 @@
 # 装车台 · build-a-car
 
+> 在线版：https://zhuka4141-cmyk.github.io/stem-racing/projects/build-a-car/
 一个能玩的选件器。四组零件各三选一，3⁴ = 81 种装法，每换一个零件，
 质量、质心、迎风面积、20 m 成绩、三条限值全部重算。
 

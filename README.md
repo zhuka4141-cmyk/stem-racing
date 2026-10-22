@@ -2,7 +2,49 @@
 
 车队自己的内容工厂。30 个纯静态作品，每天挑一个发。
 
-**不上传 GitHub，全部本地运行。** 双击 `index.html` 就能开，不需要服务器，不需要联网。
+**已上线：https://zhuka4141-cmyk.github.io/stem-racing/**
+
+每个页面也能单独打开，手机直接看。想离线用就双击本地的 `index.html`，同样不需要服务器、不需要联网。
+
+---
+
+
+## 全部 30 个在线地址
+
+一个总入口，点进去挑：**[https://zhuka4141-cmyk.github.io/stem-racing/](https://zhuka4141-cmyk.github.io/stem-racing/)**
+
+| # | 作品 | 目录 |
+|---|---|---|
+| 01 | [加速曲线分解 · Accel Curve Lab](https://zhuka4141-cmyk.github.io/stem-racing/projects/accel-curve-lab/) | `accel-curve-lab` |
+| 02 | [装车台 · build-a-car](https://zhuka4141-cmyk.github.io/stem-racing/projects/build-a-car/) | `build-a-car` |
+| 03 | [clip-factory —— 数据卡工厂](https://zhuka4141-cmyk.github.io/stem-racing/projects/clip-factory/) | `clip-factory` |
+| 04 | [coast-decel · 烧完之后那 19 米](https://zhuka4141-cmyk.github.io/stem-racing/projects/coast-decel/) | `coast-decel` |
+| 05 | [consent-avatar-race —— 起跑线](https://zhuka4141-cmyk.github.io/stem-racing/projects/consent-avatar-race/) | `consent-avatar-race` |
+| 06 | [3D 爆炸图：200 mm 级 STEM Racing 车体](https://zhuka4141-cmyk.github.io/stem-racing/projects/explode-view-3d/) | `explode-view-3d` |
+| 07 | [friction-loop · 前轮摩擦圆](https://zhuka4141-cmyk.github.io/stem-racing/projects/friction-loop/) | `friction-loop` |
+| 08 | [gear-ratio-explorer · 齿比再大一点真的更快吗](https://zhuka4141-cmyk.github.io/stem-racing/projects/gear-ratio-explorer/) | `gear-ratio-explorer` |
+| 09 | [猜它跑多少秒](https://zhuka4141-cmyk.github.io/stem-racing/projects/guess-the-time/) | `guess-the-time` |
+| 10 | [两车同跑 · Head to Head](https://zhuka4141-cmyk.github.io/stem-racing/projects/head-to-head/) | `head-to-head` |
+| 11 | [淘汰赛对阵图 · Heat Bracket](https://zhuka4141-cmyk.github.io/stem-racing/projects/heat-bracket/) | `heat-bracket` |
+| 12 | [20 m 直线加速成绩预测实验室](https://zhuka4141-cmyk.github.io/stem-racing/projects/lap-time-lab/) | `lap-time-lab` |
+| 13 | [涂装工作室 · Livery Studio](https://zhuka4141-cmyk.github.io/stem-racing/projects/livery-studio-3d/) | `livery-studio-3d` |
+| 14 | [mass-budget · 65 克的每一分钱花在哪](https://zhuka4141-cmyk.github.io/stem-racing/projects/mass-budget/) | `mass-budget` |
+| 15 | [维修区计时牌 · pit-display](https://zhuka4141-cmyk.github.io/stem-racing/projects/pit-display/) | `pit-display` |
+| 16 | [race-calendar —— 赛历](https://zhuka4141-cmyk.github.io/stem-racing/projects/race-calendar/) | `race-calendar` |
+| 17 | [闪灯反应计时 · Reaction Trainer](https://zhuka4141-cmyk.github.io/stem-racing/projects/reaction-trainer/) | `reaction-trainer` |
+| 18 | [replay-telemetry · 一趟跑的逐帧回放](https://zhuka4141-cmyk.github.io/stem-racing/projects/replay-telemetry/) | `replay-telemetry` |
+| 19 | [result-archive —— 成绩档案](https://zhuka4141-cmyk.github.io/stem-racing/projects/result-archive/) | `result-archive` |
+| 20 | [season-poster —— 赛季成绩单](https://zhuka4141-cmyk.github.io/stem-racing/projects/season-poster/) | `season-poster` |
+| 21 | [spec-sheet —— 整车外形与断面图](https://zhuka4141-cmyk.github.io/stem-racing/projects/spec-sheet/) | `spec-sheet` |
+| 22 | [找不同：两台车的六个工程参数差异](https://zhuka4141-cmyk.github.io/stem-racing/projects/spot-diff-car/) | `spot-diff-car` |
+| 23 | [车队交易卡生成器](https://zhuka4141-cmyk.github.io/stem-racing/projects/team-card/) | `team-card` |
+| 24 | [team-directory —— 队员名录](https://zhuka4141-cmyk.github.io/stem-racing/projects/team-directory/) | `team-directory` |
+| 25 | [track-flyover-3d · 20 m 直线赛道三维漫游](https://zhuka4141-cmyk.github.io/stem-racing/projects/track-flyover-3d/) | `track-flyover-3d` |
+| 26 | [turbulence-streak · 车尾的卡门涡街](https://zhuka4141-cmyk.github.io/stem-racing/projects/turbulence-streak/) | `turbulence-streak` |
+| 27 | [wake-drafting · 尾流跟车](https://zhuka4141-cmyk.github.io/stem-racing/projects/wake-drafting/) | `wake-drafting` |
+| 28 | [轮轨接触受力 · Wheel Contact](https://zhuka4141-cmyk.github.io/stem-racing/projects/wheel-contact-3d/) | `wheel-contact-3d` |
+| 29 | [为什么我们的小车会跑偏](https://zhuka4141-cmyk.github.io/stem-racing/projects/why-it-veer/) | `why-it-veer` |
+| 30 | [虚拟风洞 · 迎角与阻力](https://zhuka4141-cmyk.github.io/stem-racing/projects/wind-tunnel-3d/) | `wind-tunnel-3d` |
 
 ---
 

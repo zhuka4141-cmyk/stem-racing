@@ -1,5 +1,6 @@
 # team-directory —— 队员名录
 
+> 在线版：https://zhuka4141-cmyk.github.io/stem-racing/projects/team-directory/
 把队里的人排成一张 1080×1920 的名录卡，能按角色筛、按关键词搜，导竖版和封面两张。
 
 数据写死在 `src/team.js` 里，是一个普通 JS 常量。页面不读外部文件、不联网、不存任何东西。

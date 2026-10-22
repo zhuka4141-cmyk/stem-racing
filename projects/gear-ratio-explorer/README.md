@@ -1,5 +1,6 @@
 # gear-ratio-explorer · 齿比再大一点真的更快吗
 
+> 在线版：https://zhuka4141-cmyk.github.io/stem-racing/projects/gear-ratio-explorer/
 **先说清楚：我们的 CO₂ 车没有变速器。** 气瓶直接吹后轮，中间没有任何齿轮。
 这个页面是「如果装上会怎样」的假设空间，不是对现车的调参工具。
 

@@ -1,5 +1,6 @@
 # race-calendar —— 赛历
 
+> 在线版：https://zhuka4141-cmyk.github.io/stem-racing/projects/race-calendar/
 把一整个赛季 9 场比赛排成一条时间线，已完赛 / 进行中 / 待开赛三种状态颜色不同，每场带倒计时，导 1080×1920。
 
 赛程写在 `src/races.js` 里。**状态不用写**，页面按这台电脑的日期自己算。倒计时也只认本机时间，不查任何时间服务器。

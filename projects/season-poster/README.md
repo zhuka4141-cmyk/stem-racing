@@ -1,5 +1,6 @@
 # season-poster —— 赛季成绩单
 
+> 在线版：https://zhuka4141-cmyk.github.io/stem-racing/projects/season-poster/
 把整个赛季 8 站的最好成绩、名次、以及同期改过的三件事，压成一张竖版长图。
 
 起因是赛季总结会。我们做了 40 页 PPT，讲到第 12 页就没人听了。

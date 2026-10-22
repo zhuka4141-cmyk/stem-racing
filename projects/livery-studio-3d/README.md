@@ -1,5 +1,6 @@
 # 涂装工作室 · Livery Studio
 
+> 在线版：https://zhuka4141-cmyk.github.io/stem-racing/projects/livery-studio-3d/
 同一台三维车体，八套涂装，实时换材质。
 
 做这个是因为车队每次讨论涂装全靠嘴说——「那个深蓝一点的红」「比刚才那个亮」——谁也说不清。换成能点、能截图的八套之后再吵，至少大家看的是同一张图。

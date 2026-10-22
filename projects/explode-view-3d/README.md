@@ -1,5 +1,6 @@
 # 3D 爆炸图：200 mm 级 STEM Racing 车体
 
+> 在线版：https://zhuka4141-cmyk.github.io/stem-racing/projects/explode-view-3d/
 我把我们那台 CO₂ 拉动车的车身拆开，做成一个能拖的 3D 爆炸图，竖版 1080 × 1920，可以直接当 Reels 的素材。
 
 场景是真的 3D（Godot 4 + Web 导出），不是画出来的假轴测图。拖一下画面，零件会沿各自的轴线散开；反着拖就装回去。滚轮也能推。

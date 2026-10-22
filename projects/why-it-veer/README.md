@@ -1,5 +1,6 @@
 # 为什么我们的小车会跑偏
 
+> 在线版：https://zhuka4141-cmyk.github.io/stem-racing/projects/why-it-veer/
 STEM Racing 第 01 期。20 m 直道，CO₂ 动力，车头为什么越跑越贴墙。
 
 成片：`out/why-it-veer-01-1080x1920.mp4`（1080x1920 / 30fps / H.264 / yuv420p / 无音轨）。

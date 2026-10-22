@@ -1,5 +1,6 @@
 # 轮轨接触受力 · Wheel Contact
 
+> 在线版：https://zhuka4141-cmyk.github.io/stem-racing/projects/wheel-contact-3d/
 车在导轨上跑的时候，左前轮接地点上到底有几个力、各多大、什么时候扛不住。
 
 做成三维是因为平面图讲不清方向：法向力朝上、切向摩擦朝后、侧向力朝侧面，三个矢量互不正交于纸面，只有转起来才看得懂。

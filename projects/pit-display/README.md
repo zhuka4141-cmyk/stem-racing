@@ -1,5 +1,6 @@
 # 维修区计时牌 · pit-display
 
+> 在线版：https://zhuka4141-cmyk.github.io/stem-racing/projects/pit-display/
 两张成绩卡：1080×1920 的竖版（Reels）和 1080×1350 的 4:5 封面。车号、队名、七段数码管写的成绩、名次牌、
 六轮柱状图、四格读数、记录口径、底条，七条带在两块画板上各排一遍，纵向尺寸不同但带序一致。
 

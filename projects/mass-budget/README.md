@@ -1,5 +1,6 @@
 # mass-budget · 65 克的每一分钱花在哪
 
+> 在线版：https://zhuka4141-cmyk.github.io/stem-racing/projects/mass-budget/
 一台 CO₂ 车总重 65 克左右，重心横向偏 1.32 mm 就判不合格。这个页面把 65 克
 拆成五件，再让你拖配重——质量和位置随便调，横向重心 y_cg 实时算出来，
 **超了 1.32 mm 判定条整条变橙，字直接说「超限」。不会静悄悄地画成正常。**

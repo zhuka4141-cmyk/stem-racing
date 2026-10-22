@@ -1,5 +1,6 @@
 # 猜它跑多少秒
 
+> 在线版：https://zhuka4141-cmyk.github.io/stem-racing/projects/guess-the-time/
 一条 20 m 直线，一台随机生成的 CO₂ 弹力车，你选一个时间区间，跑完对答案，然后告诉你是哪几个参数把它拖慢了。
 
 双击 `index.html` 就能玩，不用装东西，不用联网。

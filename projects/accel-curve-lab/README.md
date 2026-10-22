@@ -1,5 +1,6 @@
 # 加速曲线分解 · Accel Curve Lab
 
+> 在线版：https://zhuka4141-cmyk.github.io/stem-racing/projects/accel-curve-lab/
 把 20 米加速过程拆开看：推力、气动阻力、滚动阻力、净加速度，外加一条叠在右轴上的速度曲线。
 
 这是车队内容计划的第 02 期。纯静态网页，双击 `index.html` 就能开，不联网，不上传任何数据。

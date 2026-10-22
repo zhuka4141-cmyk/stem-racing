@@ -1,5 +1,6 @@
 # coast-decel · 烧完之后那 19 米
 
+> 在线版：https://zhuka4141-cmyk.github.io/stem-racing/projects/coast-decel/
 CO₂ 弹丸在 0.110 s 内把 1.47 N·s 的冲量全倒给车，然后就没劲了。
 后面 19 米全靠惯性滑，车速从 18.35 掉到 16.91。这个页面就是把那段滑行拆开看：
 速度怎么掉、掉在哪、风阻和滚阻各占多少。

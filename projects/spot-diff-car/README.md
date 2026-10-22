@@ -1,5 +1,6 @@
 # 找不同：两台车的六个工程参数差异
 
+> 在线版：https://zhuka4141-cmyk.github.io/stem-racing/projects/spot-diff-car/
 两台 CO2 直线加速车的侧视图，六个工程参数不一样。点出来，每一处都告诉你
 这台车和那台车的实际数值，以及这个数值在 20 m 赛道上变成了什么。
 

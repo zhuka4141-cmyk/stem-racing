@@ -1,5 +1,6 @@
 # wake-drafting · 尾流跟车
 
+> 在线版：https://zhuka4141-cmyk.github.io/stem-racing/projects/wake-drafting/
 一句话：前车拖出的低速区同时压低动压和阻力系数，这张图把这两件事的乘积画出来。
 
 ## 为什么做这个

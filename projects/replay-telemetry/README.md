@@ -1,5 +1,6 @@
 # replay-telemetry · 一趟跑的逐帧回放
 
+> 在线版：https://zhuka4141-cmyk.github.io/stem-racing/projects/replay-telemetry/
 我们把车跑完 20 m 的那 1.19 秒拆成 285 帧，每一帧都留着位置、速度、加速度，
 还有推力、气动阻力、滚动阻力这三个力的分量。拖时间轴到任何一帧，上面三个图
 的竖直游标跟着走，下面四个力条当场重算。

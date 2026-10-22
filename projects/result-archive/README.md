@@ -1,5 +1,6 @@
 # result-archive —— 成绩档案
 
+> 在线版：https://zhuka4141-cmyk.github.io/stem-racing/projects/result-archive/
 把队里 12 站成绩排成一张 1080×1920 的计时表，能搜、能按日期/用时/名次排，下面带一条用时趋势折线。
 
 数据写死在 `src/results.js` 里。页面不读外部文件、不联网、不存东西。

@@ -1,5 +1,6 @@
 # 车队交易卡生成器
 
+> 在线版：https://zhuka4141-cmyk.github.io/stem-racing/projects/team-card/
 STEM Racing（原 F1 in Schools）用的车队卡。左边填表，右边实时出卡，导出 PNG 直接发 Instagram。
 
 双击 `index.html` 就跑。不用装依赖，不用起服务器，断网也一样。

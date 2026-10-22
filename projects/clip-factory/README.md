@@ -1,5 +1,6 @@
 # clip-factory —— 数据卡工厂
 
+> 在线版：https://zhuka4141-cmyk.github.io/stem-racing/projects/clip-factory/
 一组数据点进去，四张 1080×1920 出来。
 
 四张卡不是四份手写文案，是从 `src/points.js` 同一组数字算出来的：

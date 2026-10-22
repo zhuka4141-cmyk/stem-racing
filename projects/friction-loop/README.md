@@ -1,5 +1,6 @@
 # friction-loop · 前轮摩擦圆
 
+> 在线版：https://zhuka4141-cmyk.github.io/stem-racing/projects/friction-loop/
 一句话：把一台 CO2 直线加速车的**前轮接触斑**画出来，看纵向力和侧向力怎么共用同一份摩擦。
 
 ## 为什么做这个

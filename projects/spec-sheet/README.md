@@ -1,5 +1,6 @@
 # spec-sheet —— 整车外形与断面图
 
+> 在线版：https://zhuka4141-cmyk.github.io/stem-racing/projects/spec-sheet/
 把一台 CO₂ 直线加速车的整车参数，画成一张**能拿去打印、能贴进展板**的制图纸。
 
 起因很具体：市赛评审要一份整车尺寸说明，我们交的是一张手机拍的、贴了三个红色箭头的照片。

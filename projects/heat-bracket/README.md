@@ -1,5 +1,6 @@
 # 淘汰赛对阵图 · Heat Bracket
 
+> 在线版：https://zhuka4141-cmyk.github.io/stem-racing/projects/heat-bracket/
 20 米直线、单败淘汰的赛果图。16 台车打四轮，一张 1080×1920 的竖版图能把整条晋级路线看完。
 
 做这个东西是因为我们以前赛后发对阵图靠手画 PPT，改一个成绩就要挪半天框。现在改成生成式：数据一换，图自己重排。
