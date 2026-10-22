@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>STEM Racing · 内容计划 30 期</title>
+<style>
+  :root {
+    --ink: #0B0B0C; --ink-2: #151517; --paper: #F2F0EB; --paper-2: #E4E1D9;
+    --accent: #E8590C; --line-solid: #2A2A2E;
+    --mute: rgba(242,240,235,0.55); --mute-2: rgba(242,240,235,0.32);
+    --disp: "Bahnschrift Condensed","Bahnschrift","Arial Narrow","Microsoft YaHei",sans-serif;
+    --mono: ui-monospace, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--ink); color: var(--paper);
+    font-family: system-ui, "Microsoft YaHei", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  header { padding: 64px 32px 40px; border-bottom: 1px solid var(--line-solid); }
+  .kicker {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em;
+    color: var(--mute); text-transform: uppercase; margin: 0 0 24px;
+  }
+  h1 {
+    font-family: var(--disp); font-weight: 600; font-size: clamp(38px, 7vw, 76px);
+    line-height: 0.94; letter-spacing: -0.01em; margin: 0; max-width: 18ch;
+  }
+  .bar { width: 46px; height: 3px; background: var(--accent); margin: 28px 0 24px; }
+  .lede {
+    font-size: 15px; line-height: 1.75; color: var(--mute);
+    max-width: 62ch; margin: 0;
+  }
+  .lede strong { color: var(--paper); font-weight: 600; }
+  main { padding: 40px 32px 96px; }
+  .grid {
+    display: grid; gap: 1px; background: var(--line-solid);
+    border: 1px solid var(--line-solid);
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  }
+  .card {
+    display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto;
+    gap: 0 16px; padding: 20px; background: var(--ink); text-decoration: none;
+    color: inherit; align-content: start;
+  }
+  .card:hover { background: var(--ink-2); }
+  .card:hover .num { color: var(--accent); }
+  .num {
+    font-family: var(--mono); font-size: 12px; color: var(--mute-2);
+    grid-row: 1 / 3; align-self: start; padding-top: 4px;
+  }
+  .body { display: contents; }
+  .title {
+    font-family: var(--disp); font-size: 21px; font-weight: 600;
+    line-height: 1.2; letter-spacing: 0.01em;
+  }
+  .desc {
+    font-size: 12.5px; line-height: 1.6; color: var(--mute);
+    margin-top: 6px; overflow: hidden; display: -webkit-box;
+    -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  }
+  .dir {
+    grid-column: 2; font-family: var(--mono); font-size: 10.5px;
+    color: var(--mute-2); margin-top: 10px;
+  }
+  footer {
+    padding: 32px; border-top: 1px solid var(--line-solid);
+    font-size: 12.5px; line-height: 1.8; color: var(--mute-2);
+  }
+  footer b { color: var(--mute); font-weight: 500; }
+</style>
+</head>
+<body>
+<header>
+  <p class="kicker">STEM Racing · Content Plan</p>
+  <h1>二十米直线上<br>能讲清楚的 30 件事</h1>
+  <div class="bar"></div>
+  <p class="lede">
+    一台 CO₂ 弹力车，20 米，1.2 秒。这个时间短到不够眨一次眼，
+    但里面塞着推力、阻力、摩擦、重心、齿比、轮径。
+    这 30 个页面每一页只拆一件事，参数能拖，图会跟着动。
+    <strong>全部纯静态，双击就能开，不联网，不上传任何数据。</strong>
+  </p>
+</header>
+<main>
+  <div class="grid">
+    <a class="card" href="projects/accel-curve-lab/index.html">
+      <span class="num">01</span>
+      <span class="body">
+        <span class="title">加速曲线分解 · Accel Curve Lab</span>
+        <span class="desc">把 20 米加速过程拆开看：推力、气动阻力、滚动阻力、净加速度，外加一条叠在右轴上的速度曲线。</span>
+      </span>
+      <span class="dir">accel-curve-lab</span>
+    </a>
+    <a class="card" href="projects/build-a-car/index.html">
+      <span class="num">02</span>
+      <span class="body">
+        <span class="title">装车台 · build-a-car</span>
+        <span class="desc">一个能玩的选件器。四组零件各三选一，3⁴ = 81 种装法，每换一个零件，</span>
+      </span>
+      <span class="dir">build-a-car</span>
+    </a>
+    <a class="card" href="projects/clip-factory/index.html">
+      <span class="num">03</span>
+      <span class="body">
+        <span class="title">clip-factory —— 数据卡工厂</span>
+        <span class="desc">一组数据点进去，四张 1080×1920 出来。</span>
+      </span>
+      <span class="dir">clip-factory</span>
+    </a>
+    <a class="card" href="projects/coast-decel/index.html">
+      <span class="num">04</span>
+      <span class="body">
+        <span class="title">coast-decel · 烧完之后那 19 米</span>
+        <span class="desc">CO₂ 弹丸在 0.110 s 内把 1.47 N·s 的冲量全倒给车，然后就没劲了。</span>
+      </span>
+      <span class="dir">coast-decel</span>
+    </a>
+    <a class="card" href="projects/consent-avatar-race/index.html">
+      <span class="num">05</span>
+      <span class="body">
+        <span class="title">consent-avatar-race —— 起跑线</span>
+        <span class="desc">把队友的照片在本机裁成圆形头像，排到 8 条道上，点「发车」出一张 1080×1920 的计时表卡片。</span>
+      </span>
+      <span class="dir">consent-avatar-race</span>
+    </a>
+    <a class="card" href="projects/explode-view-3d/index.html">
+      <span class="num">06</span>
+      <span class="body">
+        <span class="title">3D 爆炸图：200 mm 级 STEM Racing 车体</span>
+        <span class="desc">我把我们那台 CO₂ 拉动车的车身拆开，做成一个能拖的 3D 爆炸图，竖版 1080 × 1920，可以直接当 Reel…</span>
+      </span>
+      <span class="dir">explode-view-3d</span>
+    </a>
+    <a class="card" href="projects/friction-loop/index.html">
+      <span class="num">07</span>
+      <span class="body">
+        <span class="title">friction-loop · 前轮摩擦圆</span>
+        <span class="desc">一句话：把一台 CO2 直线加速车的**前轮接触斑**画出来，看纵向力和侧向力怎么共用同一份摩擦。</span>
+      </span>
+      <span class="dir">friction-loop</span>
+    </a>
+    <a class="card" href="projects/gear-ratio-explorer/index.html">
+      <span class="num">08</span>
+      <span class="body">
+        <span class="title">gear-ratio-explorer · 齿比再大一点真的更快吗</span>
+        <span class="desc">**先说清楚：我们的 CO₂ 车没有变速器。** 气瓶直接吹后轮，中间没有任何齿轮。</span>
+      </span>
+      <span class="dir">gear-ratio-explorer</span>
+    </a>
+    <a class="card" href="projects/guess-the-time/index.html">
+      <span class="num">09</span>
+      <span class="body">
+        <span class="title">猜它跑多少秒</span>
+        <span class="desc">一条 20 m 直线，一台随机生成的 CO₂ 弹力车，你选一个时间区间，跑完对答案，然后告诉你是哪几个参数把它拖慢了。</span>
+      </span>
+      <span class="dir">guess-the-time</span>
+    </a>
+    <a class="card" href="projects/head-to-head/index.html">
+      <span class="num">10</span>
+      <span class="body">
+        <span class="title">两车同跑 · Head to Head</span>
+        <span class="desc">把两台 CO₂ 车放在同一条 20 米直道上，逐毫秒积分，看到底谁先到线、差多少、差在哪一段。</span>
+      </span>
+      <span class="dir">head-to-head</span>
+    </a>
+    <a class="card" href="projects/heat-bracket/index.html">
+      <span class="num">11</span>
+      <span class="body">
+        <span class="title">淘汰赛对阵图 · Heat Bracket</span>
+        <span class="desc">20 米直线、单败淘汰的赛果图。16 台车打四轮，一张 1080×1920 的竖版图能把整条晋级路线看完。</span>
+      </span>
+      <span class="dir">heat-bracket</span>
+    </a>
+    <a class="card" href="projects/lap-time-lab/index.html">
+      <span class="num">12</span>
+      <span class="body">
+        <span class="title">20 m 直线加速成绩预测实验室</span>
+        <span class="desc">双击 `index.html` 就能跑。不联网，零依赖，六个滑杆拖一下，成绩和四张图同步变。</span>
+      </span>
+      <span class="dir">lap-time-lab</span>
+    </a>
+    <a class="card" href="projects/livery-studio-3d/index.html">
+      <span class="num">13</span>
+      <span class="body">
+        <span class="title">涂装工作室 · Livery Studio</span>
+        <span class="desc">同一台三维车体，八套涂装，实时换材质。</span>
+      </span>
+      <span class="dir">livery-studio-3d</span>
+    </a>
+    <a class="card" href="projects/mass-budget/index.html">
+      <span class="num">14</span>
+      <span class="body">
+        <span class="title">mass-budget · 65 克的每一分钱花在哪</span>
+        <span class="desc">一台 CO₂ 车总重 65 克左右，重心横向偏 1.32 mm 就判不合格。这个页面把 65 克</span>
+      </span>
+      <span class="dir">mass-budget</span>
+    </a>
+    <a class="card" href="projects/pit-display/index.html">
+      <span class="num">15</span>
+      <span class="body">
+        <span class="title">维修区计时牌 · pit-display</span>
+        <span class="desc">两张成绩卡：1080×1920 的竖版（Reels）和 1080×1350 的 4:5 封面。车号、队名、七段数码管写的…</span>
+      </span>
+      <span class="dir">pit-display</span>
+    </a>
+    <a class="card" href="projects/race-calendar/index.html">
+      <span class="num">16</span>
+      <span class="body">
+        <span class="title">race-calendar —— 赛历</span>
+        <span class="desc">把一整个赛季 9 场比赛排成一条时间线，已完赛 / 进行中 / 待开赛三种状态颜色不同，每场带倒计时，导 1080×19…</span>
+      </span>
+      <span class="dir">race-calendar</span>
+    </a>
+    <a class="card" href="projects/reaction-trainer/index.html">
+      <span class="num">17</span>
+      <span class="body">
+        <span class="title">闪灯反应计时 · Reaction Trainer</span>
+        <span class="desc">等灯，闪灯瞬间开表，点到就停。跑满五次出平均、最快、最慢，再导出成一张 1080×1920 的成绩卡。</span>
+      </span>
+      <span class="dir">reaction-trainer</span>
+    </a>
+    <a class="card" href="projects/replay-telemetry/index.html">
+      <span class="num">18</span>
+      <span class="body">
+        <span class="title">replay-telemetry · 一趟跑的逐帧回放</span>
+        <span class="desc">我们把车跑完 20 m 的那 1.19 秒拆成 285 帧，每一帧都留着位置、速度、加速度，</span>
+      </span>
+      <span class="dir">replay-telemetry</span>
+    </a>
+    <a class="card" href="projects/result-archive/index.html">
+      <span class="num">19</span>
+      <span class="body">
+        <span class="title">result-archive —— 成绩档案</span>
+        <span class="desc">把队里 12 站成绩排成一张 1080×1920 的计时表，能搜、能按日期/用时/名次排，下面带一条用时趋势折线。</span>
+      </span>
+      <span class="dir">result-archive</span>
+    </a>
+    <a class="card" href="projects/season-poster/index.html">
+      <span class="num">20</span>
+      <span class="body">
+        <span class="title">season-poster —— 赛季成绩单</span>
+        <span class="desc">把整个赛季 8 站的最好成绩、名次、以及同期改过的三件事，压成一张竖版长图。</span>
+      </span>
+      <span class="dir">season-poster</span>
+    </a>
+    <a class="card" href="projects/spec-sheet/index.html">
+      <span class="num">21</span>
+      <span class="body">
+        <span class="title">spec-sheet —— 整车外形与断面图</span>
+        <span class="desc">把一台 CO₂ 直线加速车的整车参数，画成一张**能拿去打印、能贴进展板**的制图纸。</span>
+      </span>
+      <span class="dir">spec-sheet</span>
+    </a>
+    <a class="card" href="projects/spot-diff-car/index.html">
+      <span class="num">22</span>
+      <span class="body">
+        <span class="title">找不同：两台车的六个工程参数差异</span>
+        <span class="desc">两台 CO2 直线加速车的侧视图，六个工程参数不一样。点出来，每一处都告诉你</span>
+      </span>
+      <span class="dir">spot-diff-car</span>
+    </a>
+    <a class="card" href="projects/team-card/index.html">
+      <span class="num">23</span>
+      <span class="body">
+        <span class="title">车队交易卡生成器</span>
+        <span class="desc">STEM Racing（原 F1 in Schools）用的车队卡。左边填表，右边实时出卡，导出 PNG 直接发 Ins…</span>
+      </span>
+      <span class="dir">team-card</span>
+    </a>
+    <a class="card" href="projects/team-directory/index.html">
+      <span class="num">24</span>
+      <span class="body">
+        <span class="title">team-directory —— 队员名录</span>
+        <span class="desc">把队里的人排成一张 1080×1920 的名录卡，能按角色筛、按关键词搜，导竖版和封面两张。</span>
+      </span>
+      <span class="dir">team-directory</span>
+    </a>
+    <a class="card" href="projects/track-flyover-3d/index.html">
+      <span class="num">25</span>
+      <span class="body">
+        <span class="title">track-flyover-3d · 20 m 直线赛道三维漫游</span>
+        <span class="desc">把 20.00 m 的直线赛道做成一个能用鼠标拖着看的三维场景，相机跟着车跑，五道计时门各报一次分段。</span>
+      </span>
+      <span class="dir">track-flyover-3d</span>
+    </a>
+    <a class="card" href="projects/turbulence-streak/index.html">
+      <span class="num">26</span>
+      <span class="body">
+        <span class="title">turbulence-streak · 车尾的卡门涡街</span>
+        <span class="desc">一根 CO₂ 车跑完 20 m，车屁股后面一直在甩涡。这个页面就是把那一小片尾流放大成一整张图：</span>
+      </span>
+      <span class="dir">turbulence-streak</span>
+    </a>
+    <a class="card" href="projects/wake-drafting/index.html">
+      <span class="num">27</span>
+      <span class="body">
+        <span class="title">wake-drafting · 尾流跟车</span>
+        <span class="desc">一句话：前车拖出的低速区同时压低动压和阻力系数，这张图把这两件事的乘积画出来。</span>
+      </span>
+      <span class="dir">wake-drafting</span>
+    </a>
+    <a class="card" href="projects/wheel-contact-3d/index.html">
+      <span class="num">28</span>
+      <span class="body">
+        <span class="title">轮轨接触受力 · Wheel Contact</span>
+        <span class="desc">车在导轨上跑的时候，左前轮接地点上到底有几个力、各多大、什么时候扛不住。</span>
+      </span>
+      <span class="dir">wheel-contact-3d</span>
+    </a>
+    <a class="card" href="projects/why-it-veer/index.html">
+      <span class="num">29</span>
+      <span class="body">
+        <span class="title">为什么我们的小车会跑偏</span>
+        <span class="desc">STEM Racing 第 01 期。20 m 直道，CO₂ 动力，车头为什么越跑越贴墙。</span>
+      </span>
+      <span class="dir">why-it-veer</span>
+    </a>
+    <a class="card" href="projects/wind-tunnel-3d/index.html">
+      <span class="num">30</span>
+      <span class="body">
+        <span class="title">虚拟风洞 · 迎角与阻力</span>
+        <span class="desc">一条 20 米的直线加速赛道，我们把迎角从 0° 拧到 8°，成绩掉了 0.09 秒。</span>
+      </span>
+      <span class="dir">wind-tunnel-3d</span>
+    </a>
+  </div>
+</main>
+<footer>
+  <b>关于数据来源</b><br>
+  每页里的参数都标了可信度：<b>实测</b>＝本车测过有原始读数，<b>实测*</b>＝测过但读数没存档，
+  <b>估算</b>＝照相似件估的，<b>沿用</b>＝上一版图纸带来的、本车没复核。
+  没拿到原始读数的参数一律不假装准。
+  <br><br>
+  <b>关于自动发布</b><br>
+  这套东西不含任何自动发帖、自动登录、自动互动的代码。发什么、什么时候发，是人手动决定的。
+</footer>
+</body>
+</html>
